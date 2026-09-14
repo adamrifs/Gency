@@ -142,10 +142,9 @@ const THEMEMASCOT = {};
 
   //Mobile Nav Hide Show
   if ($(".mobile-menu").length) {
-    const mobileMenuContent = $(".main-header .main-menu .navigation").html();
-
-    $(".mobile-menu .navigation").append(mobileMenuContent);
-    $(".sticky-header .navigation").append(mobileMenuContent);
+    const mobileMenuContent = $(
+      ".main-header .header-lower .main-menu .navigation",
+    ).html();
     $(".mobile-menu .close-btn").on("click", function () {
       $("body").removeClass("mobile-menu-visible");
     });

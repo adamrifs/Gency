@@ -6,15 +6,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const isSubDir = window.location.pathname.match(/\/(about|services|projects|contact)\/?(index\.html)?$/);
     const basePath = isSubDir ? "../" : "./";
 
+    const footerFile = isSubDir ? "includes/footer-inner.html" : "includes/footer.html";
     Promise.all([
         fetch(basePath + "includes/header.html").then(response => response.text()),
-        fetch(basePath + "includes/footer.html").then(response => response.text())
+        fetch(basePath + footerFile).then(response => response.text())
     ]).then(([headerData, footerData]) => {
         
-        // Fix image paths in header and footer if in subdirectory
+        // Fix image paths and navigation links in header and footer if in subdirectory
         if (isSubDir) {
             headerData = headerData.replace(/src="images\//g, 'src="../images/');
             footerData = footerData.replace(/src="images\//g, 'src="../images/');
+            
+            headerData = headerData.replace(/url\(['"]?images\//g, 'url(\'../images/');
+            footerData = footerData.replace(/url\(['"]?images\//g, 'url(\'../images/');
+
+            headerData = headerData.replace(/href="\.\/"/g, 'href="../"');
+            footerData = footerData.replace(/href="\.\/"/g, 'href="../"');
+
+            headerData = headerData.replace(/href="(about|services|contact|projects)\//g, 'href="../$1/');
+            footerData = footerData.replace(/href="(about|services|contact|projects)\//g, 'href="../$1/');
         }
 
         document.getElementById("header").innerHTML = headerData;
@@ -41,24 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.dispatchEvent(new Event("load"));
                 if (window.jQuery) {
                     jQuery(window).trigger("load");
-
-                    // Re-run mobile nav population after all scripts load.
-                    // main.js clones the desktop nav into the mobile menu, but
-                    // it may have run before the dynamically-fetched header was
-                    // fully parsed. We force it here to guarantee the list shows.
-                    const $ = window.jQuery;
-                    const mobileNav = $(".mobile-menu .navigation");
-                    if (mobileNav.length && mobileNav.children().length === 0) {
-                        const desktopNavHtml = $(".main-header .main-menu .navigation").html();
-                        if (desktopNavHtml) {
-                            mobileNav.html(desktopNavHtml);
-                            // Re-attach dropdown toggle for mobile
-                            $(".mobile-menu li.dropdown .dropdown-btn").on("click", function () {
-                                $(this).prev("ul").slideToggle(500);
-                                $(this).toggleClass("active");
-                            });
-                        }
-                    }
                 }
                 return;
             }

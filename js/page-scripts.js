@@ -52,6 +52,32 @@
           smoothTouch: 0.1,
           normalizeScroll: false,
           ignoreMobileResize: true,
+          onUpdate: function (self) {
+            // ScrollSmoother moves content via transform, so window.scrollTop()
+            // always returns 0. We patch it here so headerStyle() in main.js works.
+            var scrollY = self.scrollTop();
+            var siteHeader = document.querySelector(".header-style-one");
+            var stickyHeader = document.querySelector(".main-header .sticky-header");
+            var scrollToTop = document.querySelector(".scroll-to-top");
+
+            if (!stickyHeader) return;
+
+            if (scrollY > 100) {
+              stickyHeader.classList.add("fixed-header", "animated", "slideInDown");
+              if (scrollToTop) scrollToTop.style.display = "inline-flex";
+            } else {
+              stickyHeader.classList.remove("fixed-header", "animated", "slideInDown");
+              if (scrollToTop) scrollToTop.style.display = "none";
+            }
+
+            if (siteHeader) {
+              if (scrollY > 1) {
+                siteHeader.classList.add("fixed-header");
+              } else {
+                siteHeader.classList.remove("fixed-header");
+              }
+            }
+          },
         });
       }
     }
