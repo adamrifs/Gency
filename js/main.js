@@ -935,7 +935,7 @@ const THEMEMASCOT = {};
         .removeClass("active")
         .find(".content-box")
         .stop(true, true)
-        .slideUp(300);
+        .slideUp(600);
 
       $parent.find(".icon i").removeClass("fa-minus").addClass("fa-plus");
     } else {
@@ -944,7 +944,7 @@ const THEMEMASCOT = {};
         .removeClass("active")
         .find(".content-box")
         .stop(true, true)
-        .slideUp(300);
+        .slideUp(600);
 
       $faqItems.find(".icon i").removeClass("fa-minus").addClass("fa-plus");
 
@@ -953,7 +953,7 @@ const THEMEMASCOT = {};
         .addClass("active")
         .find(".content-box")
         .stop(true, true)
-        .slideDown(300);
+        .slideDown(600);
 
       $parent.find(".icon i").removeClass("fa-plus").addClass("fa-minus");
     }

@@ -1,7 +1,15 @@
 /* Minimal local copy of the Gencyo utility classes required by this homepage. */
-.pt-100 { padding-top: 100px !important; }
-.pb-100 { padding-bottom: 100px !important; }
+.pt-100 {
+  padding-top: 100px !important;
+}
+.pb-100 {
+  padding-bottom: 100px !important;
+}
 @media (max-width: 991.98px) {
-  .pt-100 { padding-top: 80px !important; }
-  .pb-100 { padding-bottom: 80px !important; }
+  .pt-100 {
+    padding-top: 80px !important;
+  }
+  .pb-100 {
+    padding-bottom: 80px !important;
+  }
 }

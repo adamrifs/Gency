@@ -79,6 +79,35 @@
             }
           },
         });
+
+        /* ── Anchor-link intercept ─────────────────────────────────────────
+           Native hash navigation (href="#section") moves window.scrollY
+           directly, bypassing ScrollSmoother's internal transform state.
+           The result: the smoother thinks it's at position 0 while the
+           content is visually mid-page — scroll gets locked.
+           Fix: intercept every same-page hash link and drive scroll through
+           the smoother so its state and the visual position stay in sync.  */
+        document.addEventListener("click", function (e) {
+          var link = e.target.closest("a[href]");
+          if (!link) return;
+
+          var href = link.getAttribute("href");
+
+          // Only handle same-page hash links (e.g. "#contact", "#about")
+          if (!href || !href.startsWith("#") || href === "#") return;
+
+          var targetId = href.slice(1);
+          var targetEl = document.getElementById(targetId);
+          if (!targetEl) return;
+
+          e.preventDefault();
+
+          // Close mobile menu if open
+          document.body.classList.remove("mobile-menu-visible");
+
+          // Use ScrollSmoother's API — keeps the smoother's state in sync
+          window.gencyoSmoother.scrollTo(targetEl, true, "top top");
+        });
       }
     }
 
@@ -292,7 +321,53 @@
 (function () {
   "use strict";
 
+  function slideDown(el, duration) {
+    el.style.display = "block";
+    el.style.overflow = "hidden";
+    el.style.maxHeight = "0";
+    el.style.transition = "max-height " + duration + "ms ease, opacity " + duration + "ms ease";
+    el.style.opacity = "0";
+    requestAnimationFrame(function () {
+      el.style.maxHeight = el.scrollHeight + "px";
+      el.style.opacity = "1";
+    });
+    setTimeout(function () {
+      el.style.maxHeight = "";
+      el.style.overflow = "";
+      el.style.transition = "";
+      el.classList.add("show");
+    }, duration);
+  }
+
+  function slideUp(el, duration) {
+    el.style.overflow = "hidden";
+    el.style.maxHeight = el.scrollHeight + "px";
+    el.style.opacity = "1";
+    el.style.transition = "max-height " + duration + "ms ease, opacity " + duration + "ms ease";
+    el.classList.remove("show");
+    requestAnimationFrame(function () {
+      el.style.maxHeight = "0";
+      el.style.opacity = "0";
+    });
+    setTimeout(function () {
+      el.style.display = "none";
+      el.style.maxHeight = "";
+      el.style.overflow = "";
+      el.style.transition = "";
+      el.style.opacity = "";
+    }, duration);
+  }
+
   function initFaqAccordion() {
+    // Set initial state: hide all non-active content-boxes
+    document.querySelectorAll(".faq-block-one").forEach(function (block) {
+      var box = block.querySelector(".content-box");
+      if (!box) return;
+      if (!block.classList.contains("active")) {
+        box.style.display = "none";
+      }
+    });
+
     document
       .querySelectorAll(".faq-block-one .title-box")
       .forEach(function (titleBox) {
@@ -303,20 +378,24 @@
           var block = titleBox.closest(".faq-block-one");
           var isActive = block.classList.contains("active");
 
+          // Close all open items
           document
             .querySelectorAll(".faq-section .faq-block-one")
             .forEach(function (item) {
-              item.classList.remove("active");
-              var box = item.querySelector(".content-box");
-              var title = item.querySelector(".title-box");
-              if (box) box.classList.remove("show");
-              if (title) title.setAttribute("aria-expanded", "false");
+              if (item.classList.contains("active")) {
+                item.classList.remove("active");
+                var box = item.querySelector(".content-box");
+                var title = item.querySelector(".title-box");
+                if (box) slideUp(box, 500);
+                if (title) title.setAttribute("aria-expanded", "false");
+              }
             });
 
+          // If it wasn't active, open it
           if (!isActive) {
             block.classList.add("active");
             var contentBox = block.querySelector(".content-box");
-            if (contentBox) contentBox.classList.add("show");
+            if (contentBox) slideDown(contentBox, 500);
             titleBox.setAttribute("aria-expanded", "true");
           }
         }
