@@ -5219,7 +5219,7 @@ Section Title
 }
 .hero-1 .hero-oboject-1 {
   position: absolute;
-  bottom: 0;
+  bottom: -250px;
   left: 0;
 }
 @media (max-width: 1899.98px) {
@@ -5369,6 +5369,434 @@ Section Title
     text-align: center;
   }
 }
+
+/* =========================================================
+   MODERN HERO TYPOGRAPHY
+========================================================= */
+
+.hero-title-modern {
+  position: relative;
+
+  margin: 0 0 26px;
+
+  padding: 0;
+
+  color: #fff;
+
+  text-align: right;
+
+  line-height: 0.98;
+
+  letter-spacing: -2.5px;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.hero-intro {
+  position: relative;
+
+  display: inline-block;
+
+  margin-bottom: 18px;
+
+  color: rgba(255, 255, 255, 0.94);
+
+  font-size: clamp(28px, 3.5vw, 52px);
+
+  font-weight: 300;
+
+  line-height: 1.1;
+
+  letter-spacing: -1.5px;
+
+  opacity: 0;
+
+  transform: translateY(25px);
+
+  animation: heroTitleReveal 0.8s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+
+/* =========================================================
+   NAME ORANGE UNDERLINE
+========================================================= */
+
+.hero-name-accent {
+  position: absolute;
+
+  right: -2px;
+
+  bottom: -12px;
+
+  display: block;
+
+  width: 155px;
+
+  height: 14px;
+
+  pointer-events: none;
+}
+
+.hero-name-accent svg {
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  transform-origin: right center;
+
+  transform: scaleX(0);
+
+  animation: heroUnderlineReveal 0.8s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    0.8s
+    forwards;
+}
+
+
+/* =========================================================
+   MAIN HEADING
+========================================================= */
+
+.hero-heading-line {
+  display: block;
+
+  opacity: 0;
+
+  transform: translateY(35px);
+
+  animation: heroTitleReveal 0.9s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+
+/* Best Freelance */
+
+.hero-heading-light {
+  color: rgba(255, 255, 255, 0.94);
+
+  font-size: clamp(55px, 6.5vw, 90px);
+
+  font-weight: 300;
+
+  letter-spacing: -4px;
+
+  animation-delay: 0.2s;
+}
+
+
+/* Digital Marketer */
+
+.hero-heading-orange {
+  color: #ff6b1e;
+
+  font-size: clamp(58px, 7vw, 98px);
+
+  font-weight: 500;
+
+  letter-spacing: -4px;
+
+  animation-delay: 0.35s;
+
+  text-shadow:
+    0 0 30px rgba(255, 107, 30, 0.08);
+}
+
+
+/* Kerala */
+
+.hero-heading-bold {
+  color: #fff;
+
+  font-size: clamp(62px, 7.5vw, 105px);
+
+  font-weight: 750;
+
+  letter-spacing: -5px;
+
+  animation-delay: 0.5s;
+}
+
+
+/* =========================================================
+   SUPPORTING LINE
+========================================================= */
+
+.hero-right-content .supporting-line {
+  margin-top: 26px;
+
+  margin-bottom: 12px;
+
+  color: #ff6b1e;
+
+  font-size: 17px;
+
+  line-height: 1.5;
+
+  font-weight: 600;
+
+  letter-spacing: -0.2px;
+
+  opacity: 0;
+
+  transform: translateY(20px);
+
+  animation: heroContentReveal 0.8s
+    ease
+    0.75s
+    forwards;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.hero-right-content .hero-text {
+  max-width: 900px;
+
+  margin-left: auto;
+
+  margin-bottom: 26px;
+
+  color: rgba(255, 255, 255, 0.867);
+
+  font-size: 17px;
+
+  line-height: 1.7;
+
+  font-weight: 400;
+
+  opacity: 0;
+
+  transform: translateY(20px);
+
+  animation: heroContentReveal 0.8s
+    ease
+    0.9s
+    forwards;
+}
+
+
+/* =========================================================
+   BUTTON CONTAINER
+   DOES NOT MODIFY BUTTON DESIGN
+========================================================= */
+
+.hero-right-content .hero-buttons {
+  opacity: 0;
+
+  transform: translateY(20px);
+
+  animation: heroContentReveal 0.8s
+    ease
+    1.05s
+    forwards;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes heroTitleReveal {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(35px);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+@keyframes heroContentReveal {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+@keyframes heroUnderlineReveal {
+
+  0% {
+    transform:
+      scaleX(0);
+  }
+
+  100% {
+    transform:
+      scaleX(1);
+  }
+
+}
+
+
+/* =========================================================
+   TABLET / SMALL DESKTOP
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .hero-title-modern {
+    letter-spacing: -2px;
+  }
+
+  .hero-heading-light {
+    font-size: clamp(48px, 5.8vw, 70px);
+  }
+
+  .hero-heading-orange {
+    font-size: clamp(50px, 6.2vw, 76px);
+  }
+
+  .hero-heading-bold {
+    font-size: clamp(55px, 6.7vw, 82px);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+  .hero-right-content {
+    margin-right: auto !important;
+    margin-left: auto !important;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .hero-buttons {
+    justify-content: center !important;
+  }
+
+  .hero-title-modern {
+
+    text-align: center;
+
+    margin-bottom: 0;
+
+    letter-spacing: -1.5px;
+
+    line-height: 1.02;
+  }
+
+
+  .hero-intro {
+
+    margin-bottom: 12px;
+
+    font-size: 24px;
+
+    letter-spacing: -0.7px;
+  }
+
+
+  .hero-name-accent {
+
+    right: 0;
+
+    bottom: -9px;
+
+    width: 115px;
+
+    height: 10px;
+  }
+
+
+  .hero-heading-light {
+
+    font-size: clamp(
+      38px,
+      10.5vw,
+      48px
+    );
+
+    letter-spacing: -2px;
+  }
+
+
+  .hero-heading-orange {
+
+    font-size: clamp(
+      39px,
+      11vw,
+      51px
+    );
+
+    letter-spacing: -2px;
+  }
+
+
+  .hero-heading-bold {
+
+    font-size: clamp(
+      42px,
+      11.5vw,
+      54px
+    );
+
+    letter-spacing: -2.5px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .hero-intro {
+    font-size: 22px;
+  }
+
+  .hero-heading-light {
+    font-size: 35px;
+  }
+
+  .hero-heading-orange {
+    font-size: 37px;
+  }
+
+  .hero-heading-bold {
+    font-size: 39px;
+  }
+
+}
+
 
 .line-shape-animation {
   max-width: 1654px;
@@ -5723,7 +6151,7 @@ Section Title
   line-height: 40px;
 }
 .hero-2 .hero-content .content .hero-text {
-  max-width: 440px;
+  max-width: 640px;
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 37px;
 }

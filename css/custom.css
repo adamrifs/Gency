@@ -24,6 +24,17 @@ body.gencyo-page {
 a {
   text-decoration: none;
 }
+.stat-number-lg {
+  font-size: 35px;
+  font-weight: 700;
+  display: inline-block;
+  line-height: 1;
+}
+@media (max-width: 767.98px) {
+  .stat-number-lg {
+    font-size: 28px;
+  }
+}
 .gencyo-logo {
   display: inline-flex;
   align-items: center;
@@ -33,6 +44,13 @@ a {
   font-weight: 700;
   letter-spacing: -1.8px;
   line-height: 1;
+}
+.about-content .about-thumb-items .thumb1 img {
+  max-width: 270px;
+  max-height: 270px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .gencyo-logo .dot {
   width: 9px;
@@ -1075,7 +1093,7 @@ a {
 
 /* Footer logo fallback: the supplied footer asset set contains the decorative artwork,
    while the original white logo file is not part of that set. */
-.footer-section .footer-text-logo {
+.footer-text-logo {
   display: inline-block;
   color: #fff;
   font-size: 42px;
@@ -1083,14 +1101,14 @@ a {
   font-weight: 700;
   letter-spacing: -0.05em;
 }
-.footer-section .footer-text-logo span {
+.footer-text-logo span {
   color: var(--theme-color1);
 }
-.footer-section .footer-logo {
+.footer-logo {
   display: inline-block;
 }
 @media (max-width: 767.98px) {
-  .footer-section .footer-text-logo {
+  .footer-text-logo {
     font-size: 36px;
   }
 }
@@ -1558,4 +1576,265 @@ a {
   .award-section-2 .title-box > div {
     text-align: center;
   }
+}
+
+@media (max-width: 767.98px) {
+  h2 {
+    text-align: center !important;
+  }
+}
+
+/* --- Index.html Hero Layout Overrides --- */
+/* All content sections slide over the parallax hero */
+.feature-section-2,
+.about-section,
+.service-section,
+.portfolio-section,
+.testimonial-section,
+.contact-section,
+.footer {
+  position: relative;
+  z-index: 2;
+  background-color: var(--body-bg);
+}
+
+/* Remove the bottom radius so no gap shows the hero underneath */
+.feature-section-2 {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border: none !important;
+}
+.hero-left-content{
+  width:400px;
+}
+.hero-right-content{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+@media (max-width: 767.98px) {
+  .feature-section-2 {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    margin-top: -1px; /* Prevent sub-pixel rendering gaps */
+  }
+}
+
+@media (min-width: 1200px) {
+  .hero-right-content {
+    margin-right: -50px;
+  }
+}
+
+/* Mobile: perfect professional alignment */
+@media (max-width: 767.98px) {
+  .hero-right-content {
+    max-width: 100% !important;
+    text-align: center !important;
+    margin-top: 120px !important; /* Push text down below the face */
+  }
+  .hero-right-content > div:first-child {
+    display: flex;
+    justify-content: center;
+  }
+  .hero-buttons {
+    justify-content: center !important;
+  }
+  .hero-1 .hero-content {
+    justify-content: center !important;
+    padding-top: 0px !important;
+  }
+  section#home > div[data-speed] {
+    background-position: center 70% !important;
+    background-image: url("../images/reshma/reshmaMobile.webp") !important;
+  }
+  section#home > div:nth-of-type(2) {
+    background: rgba(0, 0, 0, 0.4) !important;
+  }
+  
+  /* Make navbar transparent on mobile */
+  #header, .main-header {
+    background: transparent !important;
+  }
+}
+
+/* Make sure the header container floats above the page so it doesn't push the hero down */
+#header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+/* Remove border from navbar */
+.main-header,
+.main-header .header-lower,
+.header-style-one {
+  border: none !important;
+  border-bottom: none !important;
+}
+
+/* Animation for the SVG underline */
+@keyframes draw-underline {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.draw-underline-anim {
+  animation: draw-underline 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 0.8s;
+  clip-path: inset(0 100% 0 0);
+}
+
+/* Desktop specific optimization to show next section slightly on landing */
+@media (min-width: 768px) {
+  .hero-section.hero-1 {
+    padding-top: 160px !important;
+    padding-bottom: 100px !important;
+    min-height: 95vh !important;
+  }
+}
+
+/* Mobile optimizations for hero section text arrangement */
+@media (max-width: 767.98px) {
+  /* Fix container padding to give text more width */
+  .hero-section.hero-1 .container-fluid {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  /* Place texts vertically centered but shift slightly down */
+  .hero-section.hero-1 {
+    padding-top: 140px !important;
+    padding-bottom: 20px !important;
+    min-height: 85vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+  
+  .hero-section.hero-1 .hero-content {
+    align-items: flex-end !important;
+    justify-content: center !important;
+    padding-bottom: 50px !important;
+  }
+  
+  /* Center align the text block */
+  .hero-right-content {
+    margin-right: 0 !important;
+    text-align: center !important;
+    width: 100% !important;
+    align-items: center !important;
+  }
+  
+  .hero-left-content {
+    display: none !important;
+  }
+
+  /* Make sure span wraps text so absolute SVG sticks to the text, not the container */
+  .hero-title > span:first-child {
+    display: inline-block !important;
+  }
+
+  /* Reduce font sizes to prevent word breaks, but keep it slightly large */
+  .hero-title {
+    font-size: 40px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+  }
+  
+  .hero-title > span:first-child {
+    font-size: 24px !important;
+    font-weight: 500 !important;
+    margin-bottom: 5px !important;
+  }
+  
+  /* Reset span styles to be solid, bold white text like other section titles */
+  .hero-title span {
+    font-weight: 700 !important;
+    -webkit-text-stroke: 0 !important;
+    color: #fff !important;
+  }
+  
+  /* Make sure the "in Kerala" span doesn't break strangely */
+  .hero-title span[style*="font-weight: 300"] {
+    display: inline !important;
+    white-space: normal !important;
+  }
+}
+
+/* Success Modal */
+.gencyo-success-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+.gencyo-success-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.gencyo-success-modal {
+  background: #151515;
+  border: 1px solid rgba(255, 107, 30, 0.3);
+  border-radius: 30px;
+  padding: 40px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  transform: translateY(30px) scale(0.95);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+.gencyo-success-modal-overlay.active .gencyo-success-modal {
+  transform: translateY(0) scale(1);
+}
+.gencyo-success-modal .icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(255, 107, 30, 0.1);
+  color: #ff6b1e;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+.gencyo-success-modal h3 {
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+.gencyo-success-modal p {
+  color: #7a7a7a;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+.gencyo-success-modal .close-modal-btn {
+  background: #ff6b1e;
+  color: #fff;
+  border: none;
+  padding: 12px 35px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.gencyo-success-modal .close-modal-btn:hover {
+  background: #e55c13;
 }

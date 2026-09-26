@@ -134,11 +134,11 @@ const THEMEMASCOT = {};
   });
 
   //Submenu Dropdown Toggle
-  if ($(".main-header li.dropdown ul").length) {
-    $(".main-header .navigation li.dropdown").append(
-      '<div class="dropdown-btn"><i class="fa fa-angle-down"></i></div>',
-    );
-  }
+  $(".navigation li.dropdown").each(function () {
+    if ($(this).children("ul").length > 0) {
+      $(this).append('<div class="dropdown-btn"><i class="fa fa-angle-down"></i></div>');
+    }
+  });
 
   //Mobile Nav Hide Show
   if ($(".mobile-menu").length) {
@@ -151,8 +151,17 @@ const THEMEMASCOT = {};
 
     //Dropdown Button
     $(".mobile-menu li.dropdown .dropdown-btn").on("click", function () {
-      $(this).prev("ul").slideToggle(500);
+      $(this).siblings("ul").slideToggle(500);
       $(this).toggleClass("active");
+    });
+
+    // Also allow tapping the text itself to toggle the dropdown
+    $(".mobile-menu li.dropdown > a").on("click", function (e) {
+      if ($(this).next("ul").length > 0) {
+        e.preventDefault();
+        $(this).next("ul").slideToggle(500);
+        $(this).siblings(".dropdown-btn").toggleClass("active");
+      }
     });
 
     //Menu Toggle Btn
@@ -170,50 +179,58 @@ const THEMEMASCOT = {};
   }
 
   //Fact Counter + Text Count
-  if ($(".count-box").length) {
-    $(".count-box").appear(
-      function () {
-        const $t = $(this),
-          n = $t.find(".count-text").attr("data-stop"),
-          r = parseInt($t.find(".count-text").attr("data-speed"), 10);
+  function initCounters() {
+    var boxes = document.querySelectorAll(".count-box");
+    if (!boxes.length) return;
 
-        if (!$t.hasClass("counted")) {
-          $t.addClass("counted");
-          $({
-            countNum: $t.find(".count-text").text(),
-          }).animate(
-            {
-              countNum: n,
-            },
-            {
-              duration: r,
-              easing: "linear",
-              step: function () {
-                $t.find(".count-text").text(Math.floor(this.countNum));
-              },
-              complete: function () {
-                $t.find(".count-text").text(this.countNum);
-              },
-            },
-          );
-        }
-      },
-      { accY: 0 },
-    );
+    var observer = new IntersectionObserver(function(entries, obs) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var $t = $(entry.target);
+        if ($t.hasClass("counted")) return;
+        $t.addClass("counted");
+
+        var n = parseFloat($t.find(".count-text").attr("data-stop"));
+        var r = parseInt($t.find(".count-text").attr("data-speed"), 10) || 2000;
+
+        $({ countNum: 0 }).animate({ countNum: n }, {
+          duration: r,
+          easing: "linear",
+          step: function() {
+            $t.find(".count-text").text(Math.floor(this.countNum));
+          },
+          complete: function() {
+            $t.find(".count-text").text(n);
+          }
+        });
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.2 });
+
+    boxes.forEach(function(box) {
+      observer.observe(box);
+    });
   }
+  setTimeout(initCounters, 400);
 
   // count Bar
   if ($(".count-bar").length) {
-    $(".count-bar").appear(
-      function () {
-        const el = $(this);
-        const percent = el.data("percent");
-        $(el).css("width", percent).addClass("counted");
-      },
-      {
-        accY: -50,
-      },
-    );
+    if (typeof IntersectionObserver !== 'undefined') {
+      let barObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = $(entry.target);
+            const percent = el.data("percent");
+            el.css("width", percent).addClass("counted");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      $(".count-bar").each(function () {
+        barObserver.observe(this);
+      });
+    }
   }
 
   //Price Range Slider
@@ -835,7 +852,7 @@ const THEMEMASCOT = {};
   }
 
   //Jquery Knob animation  // Pie Chart Animation
-  if ($(".dial").length) {
+  if ($(".dial").length && $.fn.appear) {
     $(".dial").appear(
       function () {
         const elm = $(this);
@@ -903,7 +920,7 @@ const THEMEMASCOT = {};
   }
 
   //Progress Bar
-  if ($(".progress-line").length) {
+  if ($(".progress-line").length && $.fn.appear) {
     $(".progress-line").appear(
       function () {
         const el = $(this);
@@ -914,50 +931,7 @@ const THEMEMASCOT = {};
     );
   }
 
-  //Accordion Box
-  const $faqItems = $(".faq-block-one, .faq-block-two");
 
-  if (!$faqItems.length) return;
-
-  // 🔥 Page Load - Active item open
-  $faqItems.filter(".active").each(function () {
-    const $this = $(this);
-    $this.find(".content-box").show();
-    $this.find(".icon i").removeClass("fa-plus").addClass("fa-minus");
-  });
-
-  // 🔥 Event Delegation (Better Practice)
-  $(document).on("click", ".title-box", function () {
-    const $parent = $(this).closest(".faq-block-one, .faq-block-two");
-
-    if ($parent.hasClass("active")) {
-      $parent
-        .removeClass("active")
-        .find(".content-box")
-        .stop(true, true)
-        .slideUp(600);
-
-      $parent.find(".icon i").removeClass("fa-minus").addClass("fa-plus");
-    } else {
-      // Close all
-      $faqItems
-        .removeClass("active")
-        .find(".content-box")
-        .stop(true, true)
-        .slideUp(600);
-
-      $faqItems.find(".icon i").removeClass("fa-minus").addClass("fa-plus");
-
-      // Open current
-      $parent
-        .addClass("active")
-        .find(".content-box")
-        .stop(true, true)
-        .slideDown(600);
-
-      $parent.find(".icon i").removeClass("fa-plus").addClass("fa-minus");
-    }
-  });
 
   $(document).ready(function () {
     $("select").niceSelect();

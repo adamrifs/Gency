@@ -30,7 +30,10 @@
                 <span class="d-xl-block">Work Together</span>
               </h2>
               <h3 class="title-2">Get the latest digital marketing insights</h3>
-              <form method="post" action="#">
+              <form action="https://api.web3forms.com/submit" method="POST">
+                <!-- Web3Forms Access Key -->
+                <input type="hidden" name="access_key" value="b0dd6257-5d07-43e4-8817-30400f22752e">
+                <input type="hidden" name="subject" value="New Newsletter Subscription">
                 <div class="form-group">
                   <input
                     type="email"
@@ -40,7 +43,7 @@
                     required
                   />
                   <button
-                    type="button"
+                    type="submit"
                     class="circle-btn"
                     aria-label="Subscribe"
                   >

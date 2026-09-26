@@ -8,7 +8,6 @@
     const toggler = document.querySelector(".mobile-nav-toggler");
     const close = document.querySelector(".mobile-menu .close-btn");
     const backdrop = document.querySelector(".mobile-menu .menu-backdrop");
-    const links = document.querySelectorAll(".mobile-menu a");
     const open = () => document.body.classList.add("mobile-menu-visible");
     const shut = () => document.body.classList.remove("mobile-menu-visible");
 
@@ -18,7 +17,74 @@
     });
     close?.addEventListener("click", shut);
     backdrop?.addEventListener("click", shut);
-    links.forEach((a) => a.addEventListener("click", shut));
+
+    // --- Mobile Dropdown Submenus ---
+    // Find all dropdown items inside the mobile menu and inject a toggle button
+    const mobileDropdowns = document.querySelectorAll(
+      ".mobile-menu li.dropdown"
+    );
+
+    mobileDropdowns.forEach((li) => {
+      const submenu = li.querySelector(":scope > ul");
+      if (!submenu) return;
+
+      // Set up for CSS transition
+      submenu.style.display = "block";
+      submenu.style.overflow = "hidden";
+      submenu.style.height = "0px";
+      submenu.style.transition = "height 0.3s ease-out";
+
+      // Create the toggle button
+      const btn = document.createElement("span");
+      btn.className = "mobile-dropdown-toggle";
+      btn.setAttribute("aria-label", "Toggle submenu");
+      btn.innerHTML = "&#43;"; // "+" sign
+      btn.style.cssText =
+        "position:absolute;right:0;top:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;cursor:pointer;z-index:10;border-left:1px solid rgba(255,255,255,0.1);";
+
+      li.style.position = "relative";
+      li.appendChild(btn);
+
+      function toggleSubmenu() {
+        const isOpen = btn.classList.contains("active");
+        if (isOpen) {
+          btn.classList.remove("active");
+          btn.innerHTML = "&#43;"; // "+"
+          submenu.style.height = "0px";
+        } else {
+          btn.classList.add("active");
+          btn.innerHTML = "&#8722;"; // "−"
+          submenu.style.height = submenu.scrollHeight + "px";
+        }
+      }
+
+      // Toggle on button click
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSubmenu();
+      });
+
+      // Also toggle when tapping the Services link itself (prevent navigation)
+      const link = li.querySelector(":scope > a");
+      if (link) {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleSubmenu();
+        });
+      }
+    });
+
+    // Close menu when clicking a non-dropdown link
+    const allLinks = document.querySelectorAll(".mobile-menu a");
+    allLinks.forEach((a) => {
+      const parentLi = a.parentElement;
+      const hasSub = a.nextElementSibling && a.nextElementSibling.tagName === "UL";
+      if (!hasSub) {
+        a.addEventListener("click", shut);
+      }
+    });
   }
 
   initMobileMenu();
@@ -192,11 +258,11 @@
         itemSplitted.split({ type: "chars, words" });
 
         tl.from(itemSplitted.chars, {
-          duration: 1,
+          duration: 0.7,
           delay: 0.5,
           x: 100,
           autoAlpha: 0,
-          stagger: 0.05,
+          stagger: 0.03,
         });
       });
     }
@@ -359,35 +425,54 @@
   }
 
   function initFaqAccordion() {
+    const faqSelectors = ".faq-block-one, .faq-block-two";
+    const titleSelectors = ".faq-block-one .title-box, .faq-block-two .title-box";
+
     // Set initial state: hide all non-active content-boxes
-    document.querySelectorAll(".faq-block-one").forEach(function (block) {
+    document.querySelectorAll(faqSelectors).forEach(function (block) {
       var box = block.querySelector(".content-box");
+      var icon = block.querySelector(".icon i");
       if (!box) return;
       if (!block.classList.contains("active")) {
         box.style.display = "none";
+        if (icon) {
+          icon.classList.remove("fa-minus");
+          icon.classList.add("fa-plus");
+        }
+      } else {
+        if (icon) {
+          icon.classList.remove("fa-plus");
+          icon.classList.add("fa-minus");
+        }
       }
     });
 
     document
-      .querySelectorAll(".faq-block-one .title-box")
+      .querySelectorAll(titleSelectors)
       .forEach(function (titleBox) {
         if (titleBox.dataset.faqBound === "1") return;
         titleBox.dataset.faqBound = "1";
 
         function toggleFaq() {
-          var block = titleBox.closest(".faq-block-one");
+          var block = titleBox.closest(faqSelectors);
           var isActive = block.classList.contains("active");
+          var container = block.closest(".row") || document;
 
-          // Close all open items
-          document
-            .querySelectorAll(".faq-section .faq-block-one")
+          // Close all open items in the same container
+          container
+            .querySelectorAll(faqSelectors)
             .forEach(function (item) {
               if (item.classList.contains("active")) {
                 item.classList.remove("active");
                 var box = item.querySelector(".content-box");
                 var title = item.querySelector(".title-box");
+                var icon = item.querySelector(".icon i");
                 if (box) slideUp(box, 500);
                 if (title) title.setAttribute("aria-expanded", "false");
+                if (icon) {
+                  icon.classList.remove("fa-minus");
+                  icon.classList.add("fa-plus");
+                }
               }
             });
 
@@ -395,8 +480,13 @@
           if (!isActive) {
             block.classList.add("active");
             var contentBox = block.querySelector(".content-box");
+            var titleIcon = block.querySelector(".icon i");
             if (contentBox) slideDown(contentBox, 500);
             titleBox.setAttribute("aria-expanded", "true");
+            if (titleIcon) {
+              titleIcon.classList.remove("fa-plus");
+              titleIcon.classList.add("fa-minus");
+            }
           }
         }
 
@@ -411,4 +501,172 @@
   }
 
   initFaqAccordion();
+})();
+
+/* =========================================================
+   Count-Up Animation (standalone – no jquery.appear needed)
+   ========================================================= */
+(function () {
+  "use strict";
+
+  function initCountUp() {
+    var $ = window.jQuery;
+    if (!$) return;
+
+    var boxes = document.querySelectorAll(".count-box");
+    if (!boxes.length) return;
+
+    // Skip if already initialized by main.js
+    var alreadyCounted = true;
+    boxes.forEach(function (box) {
+      if (!box.classList.contains("counted")) alreadyCounted = false;
+    });
+    if (alreadyCounted) return;
+
+    var observer = new IntersectionObserver(
+      function (entries, obs) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el = $(entry.target);
+          if (el.hasClass("counted")) return;
+          el.addClass("counted");
+
+          var countSpan = el.find(".count-text");
+          var target = parseFloat(countSpan.attr("data-stop"));
+          var speed =
+            parseInt(countSpan.attr("data-speed"), 10) || 2000;
+
+          $({ num: 0 }).animate(
+            { num: target },
+            {
+              duration: speed,
+              easing: "linear",
+              step: function () {
+                countSpan.text(Math.floor(this.num));
+              },
+              complete: function () {
+                countSpan.text(target);
+              },
+            }
+          );
+          obs.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    boxes.forEach(function (box) {
+      observer.observe(box);
+    });
+  }
+
+  // Run after a short delay to ensure jQuery is ready
+  setTimeout(initCountUp, 500);
+})();
+
+/* =========================================================
+   Web3Forms AJAX Submission (No Redirect)
+   Uses event delegation so it works with dynamically-loaded forms.
+   ========================================================= */
+(function () {
+  "use strict";
+
+  function showSuccessModal() {
+    let modalOverlay = document.querySelector('.gencyo-success-modal-overlay');
+    if (!modalOverlay) {
+      modalOverlay = document.createElement('div');
+      modalOverlay.className = 'gencyo-success-modal-overlay';
+      modalOverlay.innerHTML = `
+        <div class="gencyo-success-modal">
+          <div class="icon"><i class="fa-solid fa-check"></i></div>
+          <h3>Received Successfully!</h3>
+          <p>Thank you for reaching out. We have received your message and will contact you shortly.</p>
+          <button class="close-modal-btn">Awesome</button>
+        </div>
+      `;
+      document.body.appendChild(modalOverlay);
+      
+      const closeBtn = modalOverlay.querySelector('.close-modal-btn');
+      closeBtn.addEventListener('click', () => {
+        modalOverlay.classList.remove('active');
+      });
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+          modalOverlay.classList.remove('active');
+        }
+      });
+    }
+    
+    // Slight delay to allow CSS transition to trigger
+    setTimeout(() => {
+      modalOverlay.classList.add('active');
+    }, 10);
+  }
+
+  function handleWeb3FormSubmit(e) {
+    const form = e.target.closest('form[action^="https://api.web3forms.com/submit"]');
+    if (!form) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const formData = new FormData(form);
+    const submitButton = form.querySelector('button[type="submit"], input[type="submit"], button.circle-btn, button.subscribe-btn');
+    const originalButtonHtml = submitButton ? submitButton.innerHTML : '';
+
+    if (submitButton) {
+      if (submitButton.classList.contains('circle-btn')) {
+        submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+      } else if (submitButton.querySelector('.btn-title')) {
+        submitButton.querySelector('.btn-title').innerText = 'Sending...';
+      } else {
+        submitButton.innerHTML = 'Sending... <i class="fa-solid fa-spinner fa-spin" style="margin-left: 8px;"></i>';
+      }
+      submitButton.disabled = true;
+      submitButton.style.opacity = "0.7";
+    }
+
+    fetch(form.getAttribute("action"), {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => response.json())
+    .then(json => {
+      const existingMsg = form.querySelector('.web3forms-msg');
+      if (existingMsg) existingMsg.remove();
+
+      if (json.success) {
+        form.reset();
+        showSuccessModal();
+      } else {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "web3forms-msg";
+        msgDiv.style.cssText = "padding: 10px 15px; border-radius: 5px; margin-top: 15px; text-align: center; font-weight: 500; font-size: 15px; background-color: rgba(255, 51, 51, 0.2); color: #ff3333; border: 1px solid #ff3333;";
+        msgDiv.innerText = json.message || "Something went wrong!";
+        form.appendChild(msgDiv);
+        setTimeout(() => { if (msgDiv.parentNode) msgDiv.remove(); }, 6000);
+      }
+    })
+    .catch(() => {
+      const existingMsg = form.querySelector('.web3forms-msg');
+      if (existingMsg) existingMsg.remove();
+
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "web3forms-msg";
+      msgDiv.style.cssText = "background-color: rgba(255, 51, 51, 0.2); color: #ff3333; border: 1px solid #ff3333; padding: 10px 15px; border-radius: 5px; margin-top: 15px; text-align: center; font-weight: 500; font-size: 15px;";
+      msgDiv.innerText = "Something went wrong! Please try again later.";
+      form.appendChild(msgDiv);
+    })
+    .finally(() => {
+      if (submitButton) {
+        submitButton.innerHTML = originalButtonHtml;
+        submitButton.disabled = false;
+        submitButton.style.opacity = "1";
+      }
+    });
+  }
+
+  // Use capturing phase on document to catch submits from dynamically injected forms
+  document.addEventListener("submit", handleWeb3FormSubmit, true);
 })();
