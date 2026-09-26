@@ -1838,3 +1838,19 @@ a {
 .gencyo-success-modal .close-modal-btn:hover {
   background: #e55c13;
 }
+
+/* Custom subtle bobbing animation for entire sections after reveal */
+.bobbing-wrapper {
+  animation: section-bob 5s ease-in-out infinite;
+  animation-delay: 1.5s; /* Wait for WOW.js to finish */
+  will-change: transform;
+}
+
+@keyframes section-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}

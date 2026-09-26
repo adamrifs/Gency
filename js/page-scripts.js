@@ -146,6 +146,16 @@
           },
         });
 
+        if (window.location.hash) {
+          var targetId = window.location.hash.slice(1);
+          var targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            setTimeout(function() {
+              window.gencyoSmoother.scrollTo(targetEl, true, "top top");
+            }, 300);
+          }
+        }
+
         /* ── Anchor-link intercept ─────────────────────────────────────────
            Native hash navigation (href="#section") moves window.scrollY
            directly, bypassing ScrollSmoother's internal transform state.

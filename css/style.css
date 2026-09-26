@@ -4069,6 +4069,15 @@ Scroll To Top style
 ====================================================================
 
 ***/
+#seo-service,
+#local-seo-service,
+#aeo-service,
+#geo-service,
+#smm-service,
+#sem-service {
+  scroll-margin-top: 100px;
+}
+
 .section-padding {
   padding: 120px 0;
 }
