@@ -1854,3 +1854,28 @@ a {
     transform: translateY(-15px);
   }
 }
+
+/* Fix blog listing cards uniform height */
+.blog-box {
+  height: 100%;
+}
+.blog-box .inner-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.blog-box .inner-box .content-box {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.blog-box .inner-box .content-box .title {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.blog-box .inner-box .content-box .arrow-link {
+  margin-top: auto;
+}

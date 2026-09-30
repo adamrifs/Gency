@@ -136,7 +136,9 @@ const THEMEMASCOT = {};
   //Submenu Dropdown Toggle
   $(".navigation li.dropdown").each(function () {
     if ($(this).children("ul").length > 0) {
-      $(this).append('<div class="dropdown-btn"><i class="fa fa-angle-down"></i></div>');
+      $(this).append(
+        '<div class="dropdown-btn"><i class="fa fa-angle-down"></i></div>',
+      );
     }
   });
 
@@ -183,31 +185,38 @@ const THEMEMASCOT = {};
     var boxes = document.querySelectorAll(".count-box");
     if (!boxes.length) return;
 
-    var observer = new IntersectionObserver(function(entries, obs) {
-      entries.forEach(function(entry) {
-        if (!entry.isIntersecting) return;
-        var $t = $(entry.target);
-        if ($t.hasClass("counted")) return;
-        $t.addClass("counted");
+    var observer = new IntersectionObserver(
+      function (entries, obs) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var $t = $(entry.target);
+          if ($t.hasClass("counted")) return;
+          $t.addClass("counted");
 
-        var n = parseFloat($t.find(".count-text").attr("data-stop"));
-        var r = parseInt($t.find(".count-text").attr("data-speed"), 10) || 2000;
+          var n = parseFloat($t.find(".count-text").attr("data-stop"));
+          var r =
+            parseInt($t.find(".count-text").attr("data-speed"), 10) || 2000;
 
-        $({ countNum: 0 }).animate({ countNum: n }, {
-          duration: r,
-          easing: "linear",
-          step: function() {
-            $t.find(".count-text").text(Math.floor(this.countNum));
-          },
-          complete: function() {
-            $t.find(".count-text").text(n);
-          }
+          $({ countNum: 0 }).animate(
+            { countNum: n },
+            {
+              duration: r,
+              easing: "linear",
+              step: function () {
+                $t.find(".count-text").text(Math.floor(this.countNum));
+              },
+              complete: function () {
+                $t.find(".count-text").text(n);
+              },
+            },
+          );
+          obs.unobserve(entry.target);
         });
-        obs.unobserve(entry.target);
-      });
-    }, { threshold: 0.2 });
+      },
+      { threshold: 0.2 },
+    );
 
-    boxes.forEach(function(box) {
+    boxes.forEach(function (box) {
       observer.observe(box);
     });
   }
@@ -215,17 +224,20 @@ const THEMEMASCOT = {};
 
   // count Bar
   if ($(".count-bar").length) {
-    if (typeof IntersectionObserver !== 'undefined') {
-      let barObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const el = $(entry.target);
-            const percent = el.data("percent");
-            el.css("width", percent).addClass("counted");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
+    if (typeof IntersectionObserver !== "undefined") {
+      let barObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const el = $(entry.target);
+              const percent = el.data("percent");
+              el.css("width", percent).addClass("counted");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
 
       $(".count-bar").each(function () {
         barObserver.observe(this);
@@ -565,6 +577,36 @@ const THEMEMASCOT = {};
         nextEl: ".array-next",
         prevEl: ".array-prev",
       },
+    });
+
+    // Add "See More / See Less" toggle for long testimonial texts
+    $(".testimonial-block-one .inner-box .text").each(function () {
+      const $el = $(this);
+      const el = $el[0];
+
+      // Insert toggle AFTER the .text div, not inside it
+      const $toggle = $('<a href="#" class="testi-toggle" style="display:inline-block;margin-top:8px;font-size:14px;font-weight:600;color:var(--theme-color1);font-style:normal;">See More</a>');
+      $el.after($toggle);
+
+      // Hide toggle if text isn't actually clamped
+      setTimeout(function () {
+        if (el.scrollHeight <= el.clientHeight + 2) {
+          $toggle.hide();
+        }
+      }, 200);
+    });
+
+    $(document).on("click", ".testi-toggle", function (e) {
+      e.preventDefault();
+      const $text = $(this).prev(".text");
+      const isExpanded = $text.hasClass("expanded");
+      if (isExpanded) {
+        $text.removeClass("expanded");
+        $(this).text("See More");
+      } else {
+        $text.addClass("expanded");
+        $(this).text("See Less");
+      }
     });
   }
 
@@ -930,8 +972,6 @@ const THEMEMASCOT = {};
       { accY: 0 },
     );
   }
-
-
 
   $(document).ready(function () {
     $("select").niceSelect();

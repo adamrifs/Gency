@@ -158,6 +158,17 @@ body {
   font-size: var(--body-font-size);
   font-family: var(--body-font-family);
   line-height: var(--body-line-height);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input, textarea {
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
 }
 
 p,
@@ -5401,7 +5412,6 @@ Section Title
   font-weight: 400;
 }
 
-
 /* =========================================================
    INTRO
 ========================================================= */
@@ -5427,11 +5437,8 @@ Section Title
 
   transform: translateY(25px);
 
-  animation: heroTitleReveal 0.8s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    forwards;
+  animation: heroTitleReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-
 
 /* =========================================================
    NAME ORANGE UNDERLINE
@@ -5464,12 +5471,9 @@ Section Title
 
   transform: scaleX(0);
 
-  animation: heroUnderlineReveal 0.8s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    0.8s
+  animation: heroUnderlineReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.8s
     forwards;
 }
-
 
 /* =========================================================
    MAIN HEADING
@@ -5482,11 +5486,8 @@ Section Title
 
   transform: translateY(35px);
 
-  animation: heroTitleReveal 0.9s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    forwards;
+  animation: heroTitleReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-
 
 /* Best Freelance */
 
@@ -5502,7 +5503,6 @@ Section Title
   animation-delay: 0.2s;
 }
 
-
 /* Digital Marketer */
 
 .hero-heading-orange {
@@ -5516,10 +5516,8 @@ Section Title
 
   animation-delay: 0.35s;
 
-  text-shadow:
-    0 0 30px rgba(255, 107, 30, 0.08);
+  text-shadow: 0 0 30px rgba(255, 107, 30, 0.08);
 }
-
 
 /* Kerala */
 
@@ -5534,7 +5532,6 @@ Section Title
 
   animation-delay: 0.5s;
 }
-
 
 /* =========================================================
    SUPPORTING LINE
@@ -5559,12 +5556,8 @@ Section Title
 
   transform: translateY(20px);
 
-  animation: heroContentReveal 0.8s
-    ease
-    0.75s
-    forwards;
+  animation: heroContentReveal 0.8s ease 0.75s forwards;
 }
-
 
 /* =========================================================
    DESCRIPTION
@@ -5589,12 +5582,8 @@ Section Title
 
   transform: translateY(20px);
 
-  animation: heroContentReveal 0.8s
-    ease
-    0.9s
-    forwards;
+  animation: heroContentReveal 0.8s ease 0.9s forwards;
 }
-
 
 /* =========================================================
    BUTTON CONTAINER
@@ -5606,76 +5595,56 @@ Section Title
 
   transform: translateY(20px);
 
-  animation: heroContentReveal 0.8s
-    ease
-    1.05s
-    forwards;
+  animation: heroContentReveal 0.8s ease 1.05s forwards;
 }
-
 
 /* =========================================================
    ANIMATIONS
 ========================================================= */
 
 @keyframes heroTitleReveal {
-
   0% {
     opacity: 0;
 
-    transform:
-      translateY(35px);
+    transform: translateY(35px);
   }
 
   100% {
     opacity: 1;
 
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
-
 }
-
 
 @keyframes heroContentReveal {
-
   0% {
     opacity: 0;
 
-    transform:
-      translateY(20px);
+    transform: translateY(20px);
   }
 
   100% {
     opacity: 1;
 
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
-
 }
 
-
 @keyframes heroUnderlineReveal {
-
   0% {
-    transform:
-      scaleX(0);
+    transform: scaleX(0);
   }
 
   100% {
-    transform:
-      scaleX(1);
+    transform: scaleX(1);
   }
-
 }
-
 
 /* =========================================================
    TABLET / SMALL DESKTOP
 ========================================================= */
 
 @media (max-width: 1200px) {
-
   .hero-title-modern {
     letter-spacing: -2px;
   }
@@ -5691,9 +5660,7 @@ Section Title
   .hero-heading-bold {
     font-size: clamp(55px, 6.7vw, 82px);
   }
-
 }
-
 
 /* =========================================================
    MOBILE
@@ -5711,7 +5678,6 @@ Section Title
   }
 
   .hero-title-modern {
-
     text-align: center;
 
     margin-bottom: 0;
@@ -5721,9 +5687,7 @@ Section Title
     line-height: 1.02;
   }
 
-
   .hero-intro {
-
     margin-bottom: 12px;
 
     font-size: 24px;
@@ -5731,9 +5695,7 @@ Section Title
     letter-spacing: -0.7px;
   }
 
-
   .hero-name-accent {
-
     right: 0;
 
     bottom: -9px;
@@ -5743,51 +5705,30 @@ Section Title
     height: 10px;
   }
 
-
   .hero-heading-light {
-
-    font-size: clamp(
-      38px,
-      10.5vw,
-      48px
-    );
+    font-size: clamp(38px, 10.5vw, 48px);
 
     letter-spacing: -2px;
   }
-
 
   .hero-heading-orange {
-
-    font-size: clamp(
-      39px,
-      11vw,
-      51px
-    );
+    font-size: clamp(39px, 11vw, 51px);
 
     letter-spacing: -2px;
   }
 
-
   .hero-heading-bold {
-
-    font-size: clamp(
-      42px,
-      11.5vw,
-      54px
-    );
+    font-size: clamp(42px, 11.5vw, 54px);
 
     letter-spacing: -2.5px;
   }
-
 }
-
 
 /* =========================================================
    VERY SMALL PHONES
 ========================================================= */
 
 @media (max-width: 380px) {
-
   .hero-intro {
     font-size: 22px;
   }
@@ -5803,9 +5744,7 @@ Section Title
   .hero-heading-bold {
     font-size: 39px;
   }
-
 }
-
 
 .line-shape-animation {
   max-width: 1654px;
@@ -11934,23 +11873,32 @@ Section Title
   transform: translate(-50%, -50%);
 }
 .testimonial-one .slider-box {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.testimonial-one .slider-box .testimonial-slider {
+  flex: 1;
 }
 .testimonial-one .slider-box .array-button {
-  position: absolute;
-  bottom: 62px;
-  right: 80px;
+  position: relative;
+  bottom: auto;
+  right: auto;
   z-index: 1;
   gap: 10px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  padding-right: 4px;
 }
 @media (max-width: 1199.98px) {
   .testimonial-one .slider-box .array-button {
-    right: 35px;
+    padding-right: 0;
   }
 }
 @media (max-width: 575.98px) {
   .testimonial-one .slider-box .array-button {
-    display: none;
+    justify-content: center;
+    margin-top: 12px;
   }
 }
 .testimonial-one .slider-box .array-button .array-prev,
@@ -11970,21 +11918,21 @@ Section Title
 
 .testimonial-block-one .inner-box {
   background-color: var(--theme-color-black);
-  padding: 60px 60px;
+  padding: 64px 40px;
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 30px;
   margin-top: 30px;
-  padding-top: 53px;
+  display: flex;
+  flex-direction: column;
 }
 @media (max-width: 1399.98px) {
   .testimonial-block-one .inner-box {
-    padding: 40px 80px;
+    padding: 59px 40px;
   }
 }
-@media (max-width: 1199.98px) {
+@media (max-width: 575.98px) {
   .testimonial-block-one .inner-box {
-    padding: 50px 35px;
-    padding-top: 35px;
+    padding: 50px 30px;
   }
 }
 .testimonial-block-one .inner-box .star {
@@ -11992,11 +11940,20 @@ Section Title
   margin-bottom: 20px;
 }
 .testimonial-block-one .inner-box .text {
-  font-size: 20px;
-  line-height: 160%;
-  max-width: 710px;
+  font-size: 17px;
+  line-height: 1.6;
   color: #fff;
   font-style: italic;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+.testimonial-block-one .inner-box .text.expanded {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
+  max-height: none !important;
 }
 @media (max-width: 1199.98px) {
   .testimonial-block-one .inner-box .text {
@@ -12011,7 +11968,7 @@ Section Title
   -ms-flex-align: center;
   align-items: center;
   gap: 20px;
-  padding-top: 60px;
+  padding-top: 20px;
 }
 @media (max-width: 1199.98px) {
   .testimonial-block-one .inner-box .infu {
@@ -12230,12 +12187,7 @@ Section Title
   align-items: center;
   gap: 20px;
 }
-@media (max-width: 469.98px) {
-  .testimonial-customar-area .customar-right-content .google-area {
-    display: inline-block;
-    margin-top: 20px;
-  }
-}
+
 .testimonial-customar-area .customar-right-content .google-area .icon {
   width: 60px;
   height: 60px;
@@ -12245,17 +12197,14 @@ Section Title
   border-radius: 50%;
   text-align: center;
 }
-@media (max-width: 469.98px) {
-  .testimonial-customar-area .customar-right-content .google-area .icon {
-    margin-bottom: 15px;
-  }
-}
+
 .testimonial-customar-area
   .customar-right-content
   .google-area
   .content
   .title {
   font-weight: 500;
+  color: #fff;
 }
 @media (max-width: 767.98px) {
   .testimonial-customar-area
@@ -12269,6 +12218,7 @@ Section Title
 .testimonial-customar-area .customar-right-content .google-area .content .text {
   color: #fff;
   margin-top: 7px;
+  white-space: nowrap;
 }
 
 .testimonial-inner-2 {

@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Assuming root is gencyo-website, depth is usually 1 (gencyo-website) or 2 (gencyo-website/about)
   // A safer way is to check if we are in a subdirectory like about, services, etc.
   const isSubDir = window.location.pathname.match(
-    /\/(about|services|contact|projects|seo)\/?(index\.html)?$/,
+    /\/(about|services|contact|projects|seo|blog|blog-details)\/?(index\.html)?$/,
   );
   const basePath = isSubDir ? "../" : "./";
 
@@ -44,11 +44,11 @@ document.addEventListener("DOMContentLoaded", function () {
         footerData = footerData.replace(/href="\.\/"/g, 'href="../"');
 
         headerData = headerData.replace(
-          /href="(about|services|contact|projects|seo)\//g,
+          /href="(about|services|contact|projects|seo|blog|blog-details)\//g,
           'href="../$1/',
         );
         footerData = footerData.replace(
-          /href="(about|services|contact|projects|seo)\//g,
+          /href="(about|services|contact|projects|seo|blog|blog-details)\//g,
           'href="../$1/',
         );
       }
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Load all the required scripts sequentially after HTML is injected
       const scripts = [
-        basePath + "js/jquery.min.js",
+        "https://code.jquery.com/jquery-3.7.1.min.js",
         basePath + "js/bootstrap.min.js",
         basePath + "js/gsap.min.js",
         basePath + "js/ScrollTrigger.min.js",
@@ -110,4 +110,21 @@ document.addEventListener("DOMContentLoaded", function () {
       loadScript(0);
     })
     .catch((err) => console.error("Error loading partials:", err));
+});
+
+// Prevent content copying and inspecting
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('keydown', event => {
+  // Prevent Ctrl+C, Ctrl+X, Ctrl+U, Ctrl+P, Ctrl+S
+  if (event.ctrlKey && ['c', 'x', 'u', 'p', 's'].includes(event.key.toLowerCase())) {
+    event.preventDefault();
+  }
+  // Prevent F12
+  if (event.key === 'F12') {
+    event.preventDefault();
+  }
+  // Prevent Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+  if (event.ctrlKey && event.shiftKey && ['i', 'j', 'c'].includes(event.key.toLowerCase())) {
+    event.preventDefault();
+  }
 });

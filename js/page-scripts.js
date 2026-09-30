@@ -21,7 +21,7 @@
     // --- Mobile Dropdown Submenus ---
     // Find all dropdown items inside the mobile menu and inject a toggle button
     const mobileDropdowns = document.querySelectorAll(
-      ".mobile-menu li.dropdown"
+      ".mobile-menu li.dropdown",
     );
 
     mobileDropdowns.forEach((li) => {
@@ -80,7 +80,8 @@
     const allLinks = document.querySelectorAll(".mobile-menu a");
     allLinks.forEach((a) => {
       const parentLi = a.parentElement;
-      const hasSub = a.nextElementSibling && a.nextElementSibling.tagName === "UL";
+      const hasSub =
+        a.nextElementSibling && a.nextElementSibling.tagName === "UL";
       if (!hasSub) {
         a.addEventListener("click", shut);
       }
@@ -123,16 +124,26 @@
             // always returns 0. We patch it here so headerStyle() in main.js works.
             var scrollY = self.scrollTop();
             var siteHeader = document.querySelector(".header-style-one");
-            var stickyHeader = document.querySelector(".main-header .sticky-header");
+            var stickyHeader = document.querySelector(
+              ".main-header .sticky-header",
+            );
             var scrollToTop = document.querySelector(".scroll-to-top");
 
             if (!stickyHeader) return;
 
             if (scrollY > 100) {
-              stickyHeader.classList.add("fixed-header", "animated", "slideInDown");
+              stickyHeader.classList.add(
+                "fixed-header",
+                "animated",
+                "slideInDown",
+              );
               if (scrollToTop) scrollToTop.style.display = "inline-flex";
             } else {
-              stickyHeader.classList.remove("fixed-header", "animated", "slideInDown");
+              stickyHeader.classList.remove(
+                "fixed-header",
+                "animated",
+                "slideInDown",
+              );
               if (scrollToTop) scrollToTop.style.display = "none";
             }
 
@@ -150,7 +161,7 @@
           var targetId = window.location.hash.slice(1);
           var targetEl = document.getElementById(targetId);
           if (targetEl) {
-            setTimeout(function() {
+            setTimeout(function () {
               window.gencyoSmoother.scrollTo(targetEl, true, "top top");
             }, 300);
           }
@@ -298,7 +309,7 @@
         .fromTo(
           el,
           { rotate: 0 },
-          { rotate: 180, duration: 2, immediateRender: false }
+          { rotate: 180, duration: 2, immediateRender: false },
         );
     });
 
@@ -329,7 +340,7 @@
           obs.unobserve(el);
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.12 },
     );
     items.forEach(function (el) {
       observer.observe(el);
@@ -365,8 +376,7 @@
         var index = 0;
 
         function render() {
-          wrapper.style.transform =
-            "translate3d(" + -index * 100 + "%, 0, 0)";
+          wrapper.style.transform = "translate3d(" + -index * 100 + "%, 0, 0)";
           slides.forEach(function (slide, i) {
             slide.setAttribute("aria-hidden", i === index ? "false" : "true");
           });
@@ -401,7 +411,8 @@
     el.style.display = "block";
     el.style.overflow = "hidden";
     el.style.maxHeight = "0";
-    el.style.transition = "max-height " + duration + "ms ease, opacity " + duration + "ms ease";
+    el.style.transition =
+      "max-height " + duration + "ms ease, opacity " + duration + "ms ease";
     el.style.opacity = "0";
     requestAnimationFrame(function () {
       el.style.maxHeight = el.scrollHeight + "px";
@@ -419,7 +430,8 @@
     el.style.overflow = "hidden";
     el.style.maxHeight = el.scrollHeight + "px";
     el.style.opacity = "1";
-    el.style.transition = "max-height " + duration + "ms ease, opacity " + duration + "ms ease";
+    el.style.transition =
+      "max-height " + duration + "ms ease, opacity " + duration + "ms ease";
     el.classList.remove("show");
     requestAnimationFrame(function () {
       el.style.maxHeight = "0";
@@ -436,7 +448,8 @@
 
   function initFaqAccordion() {
     const faqSelectors = ".faq-block-one, .faq-block-two";
-    const titleSelectors = ".faq-block-one .title-box, .faq-block-two .title-box";
+    const titleSelectors =
+      ".faq-block-one .title-box, .faq-block-two .title-box";
 
     // Set initial state: hide all non-active content-boxes
     document.querySelectorAll(faqSelectors).forEach(function (block) {
@@ -457,57 +470,53 @@
       }
     });
 
-    document
-      .querySelectorAll(titleSelectors)
-      .forEach(function (titleBox) {
-        if (titleBox.dataset.faqBound === "1") return;
-        titleBox.dataset.faqBound = "1";
+    document.querySelectorAll(titleSelectors).forEach(function (titleBox) {
+      if (titleBox.dataset.faqBound === "1") return;
+      titleBox.dataset.faqBound = "1";
 
-        function toggleFaq() {
-          var block = titleBox.closest(faqSelectors);
-          var isActive = block.classList.contains("active");
-          var container = block.closest(".row") || document;
+      function toggleFaq() {
+        var block = titleBox.closest(faqSelectors);
+        var isActive = block.classList.contains("active");
+        var container = block.closest(".row") || document;
 
-          // Close all open items in the same container
-          container
-            .querySelectorAll(faqSelectors)
-            .forEach(function (item) {
-              if (item.classList.contains("active")) {
-                item.classList.remove("active");
-                var box = item.querySelector(".content-box");
-                var title = item.querySelector(".title-box");
-                var icon = item.querySelector(".icon i");
-                if (box) slideUp(box, 500);
-                if (title) title.setAttribute("aria-expanded", "false");
-                if (icon) {
-                  icon.classList.remove("fa-minus");
-                  icon.classList.add("fa-plus");
-                }
-              }
-            });
-
-          // If it wasn't active, open it
-          if (!isActive) {
-            block.classList.add("active");
-            var contentBox = block.querySelector(".content-box");
-            var titleIcon = block.querySelector(".icon i");
-            if (contentBox) slideDown(contentBox, 500);
-            titleBox.setAttribute("aria-expanded", "true");
-            if (titleIcon) {
-              titleIcon.classList.remove("fa-plus");
-              titleIcon.classList.add("fa-minus");
+        // Close all open items in the same container
+        container.querySelectorAll(faqSelectors).forEach(function (item) {
+          if (item.classList.contains("active")) {
+            item.classList.remove("active");
+            var box = item.querySelector(".content-box");
+            var title = item.querySelector(".title-box");
+            var icon = item.querySelector(".icon i");
+            if (box) slideUp(box, 500);
+            if (title) title.setAttribute("aria-expanded", "false");
+            if (icon) {
+              icon.classList.remove("fa-minus");
+              icon.classList.add("fa-plus");
             }
           }
-        }
-
-        titleBox.addEventListener("click", toggleFaq);
-        titleBox.addEventListener("keydown", function (event) {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            toggleFaq();
-          }
         });
+
+        // If it wasn't active, open it
+        if (!isActive) {
+          block.classList.add("active");
+          var contentBox = block.querySelector(".content-box");
+          var titleIcon = block.querySelector(".icon i");
+          if (contentBox) slideDown(contentBox, 500);
+          titleBox.setAttribute("aria-expanded", "true");
+          if (titleIcon) {
+            titleIcon.classList.remove("fa-plus");
+            titleIcon.classList.add("fa-minus");
+          }
+        }
+      }
+
+      titleBox.addEventListener("click", toggleFaq);
+      titleBox.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleFaq();
+        }
       });
+    });
   }
 
   initFaqAccordion();
@@ -543,8 +552,7 @@
 
           var countSpan = el.find(".count-text");
           var target = parseFloat(countSpan.attr("data-stop"));
-          var speed =
-            parseInt(countSpan.attr("data-speed"), 10) || 2000;
+          var speed = parseInt(countSpan.attr("data-speed"), 10) || 2000;
 
           $({ num: 0 }).animate(
             { num: target },
@@ -557,12 +565,12 @@
               complete: function () {
                 countSpan.text(target);
               },
-            }
+            },
           );
           obs.unobserve(entry.target);
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     boxes.forEach(function (box) {
@@ -582,10 +590,10 @@
   "use strict";
 
   function showSuccessModal() {
-    let modalOverlay = document.querySelector('.gencyo-success-modal-overlay');
+    let modalOverlay = document.querySelector(".gencyo-success-modal-overlay");
     if (!modalOverlay) {
-      modalOverlay = document.createElement('div');
-      modalOverlay.className = 'gencyo-success-modal-overlay';
+      modalOverlay = document.createElement("div");
+      modalOverlay.className = "gencyo-success-modal-overlay";
       modalOverlay.innerHTML = `
         <div class="gencyo-success-modal">
           <div class="icon"><i class="fa-solid fa-check"></i></div>
@@ -595,42 +603,47 @@
         </div>
       `;
       document.body.appendChild(modalOverlay);
-      
-      const closeBtn = modalOverlay.querySelector('.close-modal-btn');
-      closeBtn.addEventListener('click', () => {
-        modalOverlay.classList.remove('active');
+
+      const closeBtn = modalOverlay.querySelector(".close-modal-btn");
+      closeBtn.addEventListener("click", () => {
+        modalOverlay.classList.remove("active");
       });
-      modalOverlay.addEventListener('click', (e) => {
+      modalOverlay.addEventListener("click", (e) => {
         if (e.target === modalOverlay) {
-          modalOverlay.classList.remove('active');
+          modalOverlay.classList.remove("active");
         }
       });
     }
-    
+
     // Slight delay to allow CSS transition to trigger
     setTimeout(() => {
-      modalOverlay.classList.add('active');
+      modalOverlay.classList.add("active");
     }, 10);
   }
 
   function handleWeb3FormSubmit(e) {
-    const form = e.target.closest('form[action^="https://api.web3forms.com/submit"]');
+    const form = e.target.closest(
+      'form[action^="https://api.web3forms.com/submit"]',
+    );
     if (!form) return;
 
     e.preventDefault();
     e.stopPropagation();
 
     const formData = new FormData(form);
-    const submitButton = form.querySelector('button[type="submit"], input[type="submit"], button.circle-btn, button.subscribe-btn');
-    const originalButtonHtml = submitButton ? submitButton.innerHTML : '';
+    const submitButton = form.querySelector(
+      'button[type="submit"], input[type="submit"], button.circle-btn, button.subscribe-btn',
+    );
+    const originalButtonHtml = submitButton ? submitButton.innerHTML : "";
 
     if (submitButton) {
-      if (submitButton.classList.contains('circle-btn')) {
+      if (submitButton.classList.contains("circle-btn")) {
         submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-      } else if (submitButton.querySelector('.btn-title')) {
-        submitButton.querySelector('.btn-title').innerText = 'Sending...';
+      } else if (submitButton.querySelector(".btn-title")) {
+        submitButton.querySelector(".btn-title").innerText = "Sending...";
       } else {
-        submitButton.innerHTML = 'Sending... <i class="fa-solid fa-spinner fa-spin" style="margin-left: 8px;"></i>';
+        submitButton.innerHTML =
+          'Sending... <i class="fa-solid fa-spinner fa-spin" style="margin-left: 8px;"></i>';
       }
       submitButton.disabled = true;
       submitButton.style.opacity = "0.7";
@@ -639,42 +652,46 @@
     fetch(form.getAttribute("action"), {
       method: "POST",
       body: formData,
-      headers: { 'Accept': 'application/json' }
+      headers: { Accept: "application/json" },
     })
-    .then(response => response.json())
-    .then(json => {
-      const existingMsg = form.querySelector('.web3forms-msg');
-      if (existingMsg) existingMsg.remove();
+      .then((response) => response.json())
+      .then((json) => {
+        const existingMsg = form.querySelector(".web3forms-msg");
+        if (existingMsg) existingMsg.remove();
 
-      if (json.success) {
-        form.reset();
-        showSuccessModal();
-      } else {
+        if (json.success) {
+          form.reset();
+          showSuccessModal();
+        } else {
+          const msgDiv = document.createElement("div");
+          msgDiv.className = "web3forms-msg";
+          msgDiv.style.cssText =
+            "padding: 10px 15px; border-radius: 5px; margin-top: 15px; text-align: center; font-weight: 500; font-size: 15px; background-color: rgba(255, 51, 51, 0.2); color: #ff3333; border: 1px solid #ff3333;";
+          msgDiv.innerText = json.message || "Something went wrong!";
+          form.appendChild(msgDiv);
+          setTimeout(() => {
+            if (msgDiv.parentNode) msgDiv.remove();
+          }, 6000);
+        }
+      })
+      .catch(() => {
+        const existingMsg = form.querySelector(".web3forms-msg");
+        if (existingMsg) existingMsg.remove();
+
         const msgDiv = document.createElement("div");
         msgDiv.className = "web3forms-msg";
-        msgDiv.style.cssText = "padding: 10px 15px; border-radius: 5px; margin-top: 15px; text-align: center; font-weight: 500; font-size: 15px; background-color: rgba(255, 51, 51, 0.2); color: #ff3333; border: 1px solid #ff3333;";
-        msgDiv.innerText = json.message || "Something went wrong!";
+        msgDiv.style.cssText =
+          "background-color: rgba(255, 51, 51, 0.2); color: #ff3333; border: 1px solid #ff3333; padding: 10px 15px; border-radius: 5px; margin-top: 15px; text-align: center; font-weight: 500; font-size: 15px;";
+        msgDiv.innerText = "Something went wrong! Please try again later.";
         form.appendChild(msgDiv);
-        setTimeout(() => { if (msgDiv.parentNode) msgDiv.remove(); }, 6000);
-      }
-    })
-    .catch(() => {
-      const existingMsg = form.querySelector('.web3forms-msg');
-      if (existingMsg) existingMsg.remove();
-
-      const msgDiv = document.createElement("div");
-      msgDiv.className = "web3forms-msg";
-      msgDiv.style.cssText = "background-color: rgba(255, 51, 51, 0.2); color: #ff3333; border: 1px solid #ff3333; padding: 10px 15px; border-radius: 5px; margin-top: 15px; text-align: center; font-weight: 500; font-size: 15px;";
-      msgDiv.innerText = "Something went wrong! Please try again later.";
-      form.appendChild(msgDiv);
-    })
-    .finally(() => {
-      if (submitButton) {
-        submitButton.innerHTML = originalButtonHtml;
-        submitButton.disabled = false;
-        submitButton.style.opacity = "1";
-      }
-    });
+      })
+      .finally(() => {
+        if (submitButton) {
+          submitButton.innerHTML = originalButtonHtml;
+          submitButton.disabled = false;
+          submitButton.style.opacity = "1";
+        }
+      });
   }
 
   // Use capturing phase on document to catch submits from dynamically injected forms
