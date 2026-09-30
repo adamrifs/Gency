@@ -1879,3 +1879,11 @@ a {
 .blog-box .inner-box .content-box .arrow-link {
   margin-top: auto;
 }
+
+/* Center logo and buttons on mobile */
+@media (max-width: 767.98px) {
+  .mobile-center-logo,
+  .mobile-center-btn {
+    text-align: center;
+  }
+}

@@ -113,18 +113,25 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Prevent content copying and inspecting
-document.addEventListener('contextmenu', event => event.preventDefault());
-document.addEventListener('keydown', event => {
+document.addEventListener("contextmenu", (event) => event.preventDefault());
+document.addEventListener("keydown", (event) => {
   // Prevent Ctrl+C, Ctrl+X, Ctrl+U, Ctrl+P, Ctrl+S
-  if (event.ctrlKey && ['c', 'x', 'u', 'p', 's'].includes(event.key.toLowerCase())) {
+  if (
+    event.ctrlKey &&
+    ["c", "x", "u", "p", "s"].includes(event.key.toLowerCase())
+  ) {
     event.preventDefault();
   }
   // Prevent F12
-  if (event.key === 'F12') {
+  if (event.key === "F12") {
     event.preventDefault();
   }
   // Prevent Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-  if (event.ctrlKey && event.shiftKey && ['i', 'j', 'c'].includes(event.key.toLowerCase())) {
+  if (
+    event.ctrlKey &&
+    event.shiftKey &&
+    ["i", "j", "c"].includes(event.key.toLowerCase())
+  ) {
     event.preventDefault();
   }
 });
