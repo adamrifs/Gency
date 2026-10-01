@@ -1357,12 +1357,13 @@ a {
   color: #fff;
 }
 .mobile-social-links {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  width: 100%;
   margin-top: auto;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 .mobile-social-links a {
+  flex: 1;
   height: 52px;
   display: flex;
   align-items: center;
@@ -1646,7 +1647,7 @@ a {
   }
   section#home > div[data-speed] {
     background-position: center 70% !important;
-    background-image: url("../images/reshma/reshmaMobile.webp") !important;
+    background-image: url("../images/reshma/reshmaHeroMobile.webp") !important;
   }
   section#home > div:nth-of-type(2) {
     background: rgba(0, 0, 0, 0.4) !important;
@@ -1885,5 +1886,53 @@ a {
   .mobile-center-logo,
   .mobile-center-btn {
     text-align: center;
+  }
+}
+
+/* =========================================================
+   Brand Slider Styles
+   ========================================================= */
+.gencyo-brand-slider {
+  overflow: hidden;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 30px 0;
+}
+.gencyo-brand-track {
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.gencyo-brand-item {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 0 15px;
+  background: linear-gradient(145deg, rgba(40,40,40,0.6) 0%, rgba(15,15,15,0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+.gencyo-brand-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 1;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.gencyo-brand-item:hover img {
+  opacity: 1;
+}
+@media (max-width: 767.98px) {
+  .gencyo-brand-item {
+    width: 150px;
+    height: 100px;
+    padding: 10px 18px;
   }
 }

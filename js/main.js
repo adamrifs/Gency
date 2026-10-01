@@ -585,7 +585,9 @@ const THEMEMASCOT = {};
       const el = $el[0];
 
       // Insert toggle AFTER the .text div, not inside it
-      const $toggle = $('<a href="#" class="testi-toggle" style="display:inline-block;margin-top:8px;font-size:14px;font-weight:600;color:var(--theme-color1);font-style:normal;">See More</a>');
+      const $toggle = $(
+        '<a href="#" class="testi-toggle" style="display:inline-block;margin-top:8px;font-size:14px;font-weight:600;color:var(--theme-color1);font-style:normal;">See More</a>',
+      );
       $el.after($toggle);
 
       // Hide toggle if text isn't actually clamped

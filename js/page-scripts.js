@@ -374,6 +374,10 @@
         if (!wrapper || slides.length < 2) return;
 
         var index = 0;
+        var autoSlideInterval;
+
+        // Ensure smooth transition for sliding
+        wrapper.style.transition = "transform 0.5s ease";
 
         function render() {
           wrapper.style.transform = "translate3d(" + -index * 100 + "%, 0, 0)";
@@ -382,19 +386,48 @@
           });
         }
 
+        function nextSlide() {
+          index = (index + 1) % slides.length;
+          render();
+        }
+
+        function prevSlide() {
+          index = (index - 1 + slides.length) % slides.length;
+          render();
+        }
+
+        function startAutoSlide() {
+          stopAutoSlide();
+          autoSlideInterval = setInterval(nextSlide, 3000);
+        }
+
+        function stopAutoSlide() {
+          if (autoSlideInterval) {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = null;
+          }
+        }
+
         prev &&
           prev.addEventListener("click", function () {
-            index = (index - 1 + slides.length) % slides.length;
-            render();
+            prevSlide();
+            startAutoSlide();
           });
 
         next &&
           next.addEventListener("click", function () {
-            index = (index + 1) % slides.length;
-            render();
+            nextSlide();
+            startAutoSlide();
           });
 
+        // Pause on interaction
+        box.addEventListener("mouseenter", stopAutoSlide);
+        box.addEventListener("mouseleave", startAutoSlide);
+        box.addEventListener("touchstart", stopAutoSlide, { passive: true });
+        box.addEventListener("touchend", startAutoSlide, { passive: true });
+
         render();
+        startAutoSlide();
       });
   }
 
@@ -415,7 +448,10 @@
       "max-height " + duration + "ms ease, opacity " + duration + "ms ease";
     el.style.opacity = "0";
     requestAnimationFrame(function () {
-      el.style.maxHeight = el.scrollHeight + "px";
+      // scrollHeight can read as 0 if a parent has visibility:hidden (WOW.js).
+      // Use a generous fallback so the animation always works.
+      var targetHeight = el.scrollHeight || 1000;
+      el.style.maxHeight = targetHeight + "px";
       el.style.opacity = "1";
     });
     setTimeout(function () {
@@ -477,16 +513,22 @@
       function toggleFaq() {
         var block = titleBox.closest(faqSelectors);
         var isActive = block.classList.contains("active");
-        var container = block.closest(".row") || document;
 
-        // Close all open items in the same container
-        container.querySelectorAll(faqSelectors).forEach(function (item) {
+        // Scope to the whole FAQ section so only one accordion is open
+        // at a time across both left and right columns.
+        var faqSection =
+          block.closest(".faq-section") ||
+          block.closest(".row") ||
+          document;
+
+        // Close all open items across the entire FAQ section
+        faqSection.querySelectorAll(faqSelectors).forEach(function (item) {
           if (item.classList.contains("active")) {
             item.classList.remove("active");
             var box = item.querySelector(".content-box");
             var title = item.querySelector(".title-box");
             var icon = item.querySelector(".icon i");
-            if (box) slideUp(box, 500);
+            if (box) slideUp(box, 400);
             if (title) title.setAttribute("aria-expanded", "false");
             if (icon) {
               icon.classList.remove("fa-minus");
@@ -500,7 +542,11 @@
           block.classList.add("active");
           var contentBox = block.querySelector(".content-box");
           var titleIcon = block.querySelector(".icon i");
-          if (contentBox) slideDown(contentBox, 500);
+          if (contentBox) {
+            // Ensure element is visible before animating
+            contentBox.style.display = "block";
+            slideDown(contentBox, 400);
+          }
           titleBox.setAttribute("aria-expanded", "true");
           if (titleIcon) {
             titleIcon.classList.remove("fa-plus");

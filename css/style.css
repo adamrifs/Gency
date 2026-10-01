@@ -8070,7 +8070,14 @@ Section Title
 }
 @media (max-width: 767.98px) {
   .about-content .about-thumb-items {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .about-content > .btn-style-one {
+    display: table;
+    margin: 0 auto;
   }
 }
 @media (max-width: 1199.98px) {
@@ -11944,16 +11951,25 @@ Section Title
   line-height: 1.6;
   color: #fff;
   font-style: italic;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
+  overflow-y: auto;
+  height: 136px; /* Approx 5 lines at 1.6 line-height */
+  padding-right: 10px;
+}
+/* Custom scrollbar for testimonial text to keep it sleek */
+.testimonial-block-one .inner-box .text::-webkit-scrollbar {
+  width: 4px;
+}
+.testimonial-block-one .inner-box .text::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05); 
+  border-radius: 4px;
+}
+.testimonial-block-one .inner-box .text::-webkit-scrollbar-thumb {
+  background: var(--theme-color1); 
+  border-radius: 4px;
 }
 .testimonial-block-one .inner-box .text.expanded {
-  display: block !important;
-  -webkit-line-clamp: unset !important;
+  height: auto !important;
   overflow: visible !important;
-  max-height: none !important;
 }
 @media (max-width: 1199.98px) {
   .testimonial-block-one .inner-box .text {
