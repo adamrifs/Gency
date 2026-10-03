@@ -1936,3 +1936,11 @@ a {
     padding: 10px 18px;
   }
 }
+
+/* Fix form input text visibility */
+.form-control,
+.input-text,
+.form-control:focus,
+.input-text:focus {
+  color: #ffffff !important;
+}
