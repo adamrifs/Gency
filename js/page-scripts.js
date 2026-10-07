@@ -375,9 +375,10 @@
 
         var index = 0;
         var autoSlideInterval;
+        var isIntersecting = false;
 
         // Ensure smooth transition for sliding
-        wrapper.style.transition = "transform 0.5s ease";
+        wrapper.style.transition = "transform 0.4s ease";
 
         function render() {
           wrapper.style.transform = "translate3d(" + -index * 100 + "%, 0, 0)";
@@ -398,7 +399,7 @@
 
         function startAutoSlide() {
           stopAutoSlide();
-          autoSlideInterval = setInterval(nextSlide, 3000);
+          autoSlideInterval = setInterval(nextSlide, 2000);
         }
 
         function stopAutoSlide() {
@@ -422,12 +423,32 @@
 
         // Pause on interaction
         box.addEventListener("mouseenter", stopAutoSlide);
-        box.addEventListener("mouseleave", startAutoSlide);
+        box.addEventListener("mouseleave", function() {
+          if (isIntersecting) startAutoSlide();
+        });
         box.addEventListener("touchstart", stopAutoSlide, { passive: true });
-        box.addEventListener("touchend", startAutoSlide, { passive: true });
+        box.addEventListener("touchend", function() {
+          if (isIntersecting) startAutoSlide();
+        }, { passive: true });
 
         render();
-        startAutoSlide();
+        
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              isIntersecting = entry.isIntersecting;
+              if (isIntersecting) {
+                startAutoSlide();
+              } else {
+                stopAutoSlide();
+              }
+            });
+          }, { threshold: 0.1 });
+          observer.observe(box);
+        } else {
+          isIntersecting = true;
+          startAutoSlide();
+        }
       });
   }
 

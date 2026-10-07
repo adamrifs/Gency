@@ -7553,6 +7553,7 @@ Section Title
   position: absolute;
   top: -40%;
   right: 0;
+  pointer-events: none;
 }
 @media (max-width: 1199.98px) {
   .feature-section .light-shape-1 {
@@ -7563,6 +7564,7 @@ Section Title
   position: absolute;
   top: -12%;
   right: 20px;
+  pointer-events: none;
 }
 @media (max-width: 1199.98px) {
   .feature-section .shape-1 {
@@ -9959,6 +9961,7 @@ Section Title
   text-align: center;
   border-radius: 50%;
   background-color: var(--theme-color3);
+  pointer-events: none;
 }
 .faq-block-one .title-box .icon i {
   color: #fff;
@@ -10037,6 +10040,7 @@ Section Title
   width: initial;
   height: initial;
   line-height: initial;
+  pointer-events: none;
 }
 .faq-block-one.style-new-2 .title-box .icon i {
   color: #fff;
@@ -10063,6 +10067,7 @@ Section Title
   position: absolute;
   top: -55%;
   left: 0;
+  pointer-events: none;
 }
 @media (max-width: 1699.98px) {
   .faq-section .faq-light-shape {
@@ -10074,6 +10079,7 @@ Section Title
   top: -20%;
   left: 0;
   z-index: 99;
+  pointer-events: none;
 }
 @media (max-width: 1699.98px) {
   .faq-section .faq-shape {
@@ -10229,6 +10235,9 @@ Section Title
   .faq-block-two .title-box .content .title {
     font-size: 13px;
   }
+}
+.faq-block-two .title-box .icon {
+  pointer-events: none;
 }
 .faq-block-two .title-box .icon i {
   color: var(--theme-color1);
@@ -11847,6 +11856,10 @@ Section Title
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 30px;
   margin-top: 30px;
+  height: calc(100% - 30px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 @media (max-width: 1199.98px) {
   .testimonial-one .left-content {

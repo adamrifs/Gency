@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Assuming root is gencyo-website, depth is usually 1 (gencyo-website) or 2 (gencyo-website/about)
   // A safer way is to check if we are in a subdirectory like about, services, etc.
   const isSubDir = window.location.pathname.match(
-    /\/(about|services|contact|projects|seo|blog|blog-details)\/?(index\.html)?$/,
+    /\/(about|services|contact|projects|seo|blog|blog-details|best-digital-marketing-course-in-kerala)\/?(index\.html)?$/,
   );
   const basePath = isSubDir ? "../" : "./";
 
@@ -44,11 +44,11 @@ document.addEventListener("DOMContentLoaded", function () {
         footerData = footerData.replace(/href="\.\/"/g, 'href="../"');
 
         headerData = headerData.replace(
-          /href="(about|services|contact|projects|seo|blog|blog-details)\//g,
+          /href="(about|services|contact|projects|seo|blog|blog-details|best-digital-marketing-course-in-kerala)\//g,
           'href="../$1/',
         );
         footerData = footerData.replace(
-          /href="(about|services|contact|projects|seo|blog|blog-details)\//g,
+          /href="(about|services|contact|projects|seo|blog|blog-details|best-digital-marketing-course-in-kerala)\//g,
           'href="../$1/',
         );
       }

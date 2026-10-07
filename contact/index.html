@@ -67,29 +67,37 @@
                   </div>
                   <!-- Contact Form -->
                   <form
-                    id="contact_form"
-                    name="contact_form"
-                    action="#"
-                    method="post"
+                    action="https://api.web3forms.com/submit"
+                    method="POST"
+                    id="contact-form"
+                    class="contact-form-box"
                   >
+                    <!-- Web3Forms Access Key -->
+                    <input
+                      type="hidden"
+                      name="access_key"
+                      value="b0dd6257-5d07-43e4-8817-30400f22752e"
+                    />
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="mb-4">
                           <input
-                            name="form_name"
+                            name="name"
                             class="form-control"
                             type="text"
                             placeholder="Enter Name"
+                            required
                           />
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="mb-4">
                           <input
-                            name="form_email"
+                            name="email"
                             class="form-control required email"
                             type="email"
                             placeholder="Enter Email"
+                            required
                           />
                         </div>
                       </div>
@@ -98,7 +106,7 @@
                       <div class="col-sm-6">
                         <div class="mb-4">
                           <input
-                            name="form_subject"
+                            name="subject"
                             class="form-control required"
                             type="text"
                             placeholder="Enter Subject"
@@ -108,20 +116,22 @@
                       <div class="col-sm-6">
                         <div class="mb-4">
                           <input
-                            name="form_phone"
+                            name="phone"
                             class="form-control"
-                            type="text"
+                            type="tel"
                             placeholder="Enter Phone"
+                            required
                           />
                         </div>
                       </div>
                     </div>
                     <div class="mb-4">
                       <textarea
-                        name="form_message"
+                        name="message"
                         class="form-control required"
                         rows="7"
                         placeholder="Enter Message"
+                        required
                       ></textarea>
                     </div>
                     <div class="mb-5 mt-4 theme-btn-main">
@@ -246,5 +256,94 @@
     <div class="mouseCursor cursor-inner"></div>
 
     <script src="../js/includes.js"></script>
+
+    <script>
+      // Fallback Web3Forms handler specifically for the contact page
+      // This ensures the form submits via AJAX even if page-scripts.js fails to load
+      document.addEventListener("DOMContentLoaded", function () {
+        const contactForm = document.getElementById("contact-form");
+        if (!contactForm) return;
+
+        contactForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const form = e.target;
+          const formData = new FormData(form);
+          const submitButton = form.querySelector('button[type="submit"]');
+          const originalButtonHtml = submitButton ? submitButton.innerHTML : "";
+
+          if (submitButton) {
+            const btnTitle = submitButton.querySelector(".btn-title");
+            if (btnTitle) {
+              btnTitle.innerText = "Sending...";
+            } else {
+              submitButton.innerHTML = "Sending...";
+            }
+            submitButton.disabled = true;
+            submitButton.style.opacity = "0.7";
+          }
+
+          fetch(form.getAttribute("action"), {
+            method: "POST",
+            body: formData,
+            headers: { Accept: "application/json" },
+          })
+            .then((response) => response.json())
+            .then((json) => {
+              const existingMsg = form.querySelector(".web3forms-msg");
+              if (existingMsg) existingMsg.remove();
+
+              if (json.success) {
+                form.reset();
+                // Show success modal manually
+                let modalOverlay = document.querySelector(".gencyo-success-modal-overlay");
+                if (!modalOverlay) {
+                  modalOverlay = document.createElement("div");
+                  modalOverlay.className = "gencyo-success-modal-overlay";
+                  modalOverlay.innerHTML = `
+                    <div class="gencyo-success-modal">
+                      <div class="icon"><i class="fa-solid fa-check"></i></div>
+                      <h3>Received Successfully!</h3>
+                      <p>Thank you for reaching out. We have received your message and will contact you shortly.</p>
+                      <button class="close-modal-btn">Awesome</button>
+                    </div>
+                  `;
+                  document.body.appendChild(modalOverlay);
+
+                  modalOverlay.querySelector(".close-modal-btn").addEventListener("click", () => {
+                    modalOverlay.classList.remove("active");
+                  });
+                  modalOverlay.addEventListener("click", (evt) => {
+                    if (evt.target === modalOverlay) modalOverlay.classList.remove("active");
+                  });
+                }
+                setTimeout(() => modalOverlay.classList.add("active"), 10);
+              } else {
+                const msgDiv = document.createElement("div");
+                msgDiv.className = "web3forms-msg";
+                msgDiv.style.cssText = "padding: 10px 15px; border-radius: 5px; margin-top: 15px; text-align: center; font-weight: 500; font-size: 15px; background-color: rgba(255, 51, 51, 0.2); color: #ff3333; border: 1px solid #ff3333;";
+                msgDiv.innerText = json.message || "Something went wrong!";
+                form.appendChild(msgDiv);
+                setTimeout(() => { if (msgDiv.parentNode) msgDiv.remove(); }, 6000);
+              }
+            })
+            .catch(() => {
+              const msgDiv = document.createElement("div");
+              msgDiv.className = "web3forms-msg";
+              msgDiv.style.cssText = "background-color: rgba(255, 51, 51, 0.2); color: #ff3333; border: 1px solid #ff3333; padding: 10px 15px; border-radius: 5px; margin-top: 15px; text-align: center; font-weight: 500; font-size: 15px;";
+              msgDiv.innerText = "Something went wrong! Please try again later.";
+              form.appendChild(msgDiv);
+            })
+            .finally(() => {
+              if (submitButton) {
+                submitButton.innerHTML = originalButtonHtml;
+                submitButton.disabled = false;
+                submitButton.style.opacity = "1";
+              }
+            });
+        });
+      });
+    </script>
   </body>
 </html>
