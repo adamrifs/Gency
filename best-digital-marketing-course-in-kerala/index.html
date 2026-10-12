@@ -20,6 +20,15 @@
     <link rel="stylesheet" href="../css/tm-utility-classes.css" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/custom.css" />
+    <script>
+      if (window.location.pathname.endsWith("index.html")) {
+        const cleanPath =
+          window.location.pathname.replace(/index\.html$/, "") +
+          window.location.search +
+          window.location.hash;
+        window.history.replaceState(null, "", cleanPath);
+      }
+    </script>
   </head>
   <body class="gencyo-page">
     <div id="header"></div>
@@ -40,6 +49,7 @@
                 <h1 class="title char-animation">Best Digital Marketing Course in Kerala Online Classes</h1>
                 <ul class="page-breadcrumb">
                   <li><a href="../">Home</a></li>
+                  <li><a href="../services/">Services</a></li>
                   <li>Best Digital Marketing Course in Kerala</li>
                 </ul>
 
@@ -159,7 +169,8 @@
                         </span>
                       </a>
                       <a
-                        href="#course-modules"
+                        href="../docs/nexus.pdf"
+                        download="nexus.pdf"
                         class="btn-style-one wow fadeInUp"
                         data-wow-delay=".7s"
                         style="
@@ -1481,13 +1492,13 @@
                     </ul>
 
                     <div class="d-flex flex-wrap gap-3 mt-4">
-                      <a href="../contact/index.html" class="btn-style-one">
+                      <a href="../contact/" class="btn-style-one">
                         <span class="btn-arrow-left"><img src="../images/icons/right-arrow-1-2.png" alt="" /></span>
                         <span class="btn-title">ENQUIRE NOW</span>
                         <span class="btn-arrow-right"><img src="../images/icons/right-arrow-1-2.png" alt="" /></span>
                       </a>
                       
-                      <a href="#curriculum" class="btn-style-one" style="background: transparent; border: 2px solid rgba(255, 255, 255, 0.5);">
+                      <a href="../docs/nexus.pdf" download="nexus.pdf" class="btn-style-one" style="background: transparent; border: 2px solid rgba(255, 255, 255, 0.5);">
                         <span class="btn-arrow-left"><img src="../images/icons/right-arrow-1-2.png" alt="" /></span>
                         <span class="btn-title">VIEW COURSE MODULES</span>
                         <span class="btn-arrow-right"><img src="../images/icons/right-arrow-1-2.png" alt="" /></span>
@@ -1511,6 +1522,28 @@
     <button id="back-top" class="back-to-top" aria-label="Back to top">
       <i class="fa-solid fa-arrow-up"></i>
     </button>
+
+    <!-- WhatsApp Floating Action Button -->
+    <a
+      href="https://wa.me/919746616242"
+      class="whatsapp-float"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat on WhatsApp"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+      <span class="whatsapp-tooltip">Chat with me</span>
+    </a>
+
+    <!-- Call Floating Action Button -->
+    <a
+      href="tel:+919746616242"
+      class="call-float"
+      aria-label="Call Now"
+    >
+      <i class="fa-solid fa-phone"></i>
+      <span class="call-tooltip">Call: +91 97466 16242</span>
+    </a>
 
     <!-- Mouse Cursor -->
     <div class="mouseCursor cursor-outer"></div>

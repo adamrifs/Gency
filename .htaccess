@@ -2,6 +2,10 @@ DirectoryIndex index.html
 
 RewriteEngine On
 
+# Redirect any request containing index.html to clean directory path
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index\.html [NC]
+RewriteRule ^(.*)index\.html$ /$1 [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f

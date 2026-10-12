@@ -1,3 +1,12 @@
+// Remove index.html from URL address bar if present
+if (window.location.pathname.endsWith("index.html")) {
+  const cleanPath =
+    window.location.pathname.replace(/index\.html$/, "") +
+    window.location.search +
+    window.location.hash;
+  window.history.replaceState(null, "", cleanPath);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   // Determine depth to correctly reference assets
   const depth = window.location.pathname
@@ -56,6 +65,87 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("header").innerHTML = headerData;
       document.getElementById("footer").innerHTML = footerData;
 
+      // Ensure floating WhatsApp button is present across all pages
+      if (!document.querySelector(".whatsapp-float")) {
+        const waBtn = document.createElement("a");
+        waBtn.href = "https://wa.me/919746616242";
+        waBtn.className = "whatsapp-float";
+        waBtn.target = "_blank";
+        waBtn.rel = "noopener noreferrer";
+        waBtn.setAttribute("aria-label", "Chat on WhatsApp");
+        waBtn.innerHTML = `
+          <i class="fa-brands fa-whatsapp"></i>
+          <span class="whatsapp-tooltip">Chat with me</span>
+        `;
+        document.body.appendChild(waBtn);
+      }
+
+      // Ensure floating Call button is present across all pages
+      if (!document.querySelector(".call-float")) {
+        const callBtn = document.createElement("a");
+        callBtn.href = "tel:+919746616242";
+        callBtn.className = "call-float";
+        callBtn.setAttribute("aria-label", "Call Now");
+        callBtn.innerHTML = `
+          <i class="fa-solid fa-phone"></i>
+          <span class="call-tooltip">Call: +91 97466 16242</span>
+        `;
+        document.body.appendChild(callBtn);
+      }
+
+      // On Home page, hide floating buttons on hero section and show from second section onwards
+      function initHomeFloatingToggle() {
+        const isHomePage =
+          document.body.classList.contains("home-page") ||
+          !!document.getElementById("home");
+        if (!isHomePage) return;
+
+        const targetSection =
+          document.querySelector(".feature-section-2") ||
+          document.querySelector("#about");
+        if (!targetSection) return;
+
+        const floatingBtns = document.querySelectorAll(
+          ".whatsapp-float, .call-float",
+        );
+        if (!floatingBtns.length) return;
+
+        function updateFloating() {
+          const rect = targetSection.getBoundingClientRect();
+          // Show when the second section reaches the viewport
+          const shouldShow = rect.top <= window.innerHeight * 0.85;
+
+          floatingBtns.forEach((btn) => {
+            if (shouldShow) {
+              btn.classList.add("floating-visible");
+            } else {
+              btn.classList.remove("floating-visible");
+            }
+          });
+        }
+
+        window.updateHomeFloatingVisibility = updateFloating;
+        updateFloating();
+
+        window.addEventListener("scroll", updateFloating, { passive: true });
+        window.addEventListener("resize", updateFloating, { passive: true });
+
+        if ("IntersectionObserver" in window) {
+          const observer = new IntersectionObserver(
+            () => {
+              updateFloating();
+            },
+            {
+              root: null,
+              threshold: [0, 0.1, 0.5, 1],
+            },
+          );
+          observer.observe(targetSection);
+        }
+      }
+
+      initHomeFloatingToggle();
+
       // Automatically set active menu item based on current URL
       const currentUrl = window.location.href.split("?")[0].split("#")[0];
       const normalizedUrl = currentUrl.endsWith("index.html")
@@ -87,8 +177,8 @@ document.addEventListener("DOMContentLoaded", function () {
         basePath + "js/SplitText.min.js",
         basePath + "js/ScrollToPlugin.min.js",
         basePath + "js/parallaxie.js",
-        basePath + "js/main.js?v=11",
-        basePath + "js/page-scripts.js?v=11",
+        basePath + "js/main.js?v=12",
+        basePath + "js/page-scripts.js?v=12",
       ];
 
       function loadScript(index) {

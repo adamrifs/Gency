@@ -123,6 +123,9 @@
             // ScrollSmoother moves content via transform, so window.scrollTop()
             // always returns 0. We patch it here so headerStyle() in main.js works.
             var scrollY = self.scrollTop();
+            if (typeof window.updateHomeFloatingVisibility === "function") {
+              window.updateHomeFloatingVisibility();
+            }
             var siteHeader = document.querySelector(".header-style-one");
             var stickyHeader = document.querySelector(
               ".main-header .sticky-header",
@@ -314,6 +317,9 @@
     });
 
     ScrollTrigger.refresh();
+    if (typeof window.updateHomeFloatingVisibility === "function") {
+      window.updateHomeFloatingVisibility();
+    }
   }
 
   initGencyoAnimations();
