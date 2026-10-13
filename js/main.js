@@ -111,27 +111,7 @@ const THEMEMASCOT = {};
       });
   }
 
-  // Header hide on scroll down, show on scroll up (optional)
 
-  if ($(window).width() > 991) {
-    if ($(window).width() > 768) {
-      $(".parallaxie").parallaxie({
-        speed: 0.55,
-        offset: 0,
-      });
-    }
-  }
-
-  // hover animation
-  const $items = $(".case-block-four");
-
-  // set second one active by default
-  $items.eq(1).addClass("active");
-
-  $items.hover(function () {
-    $items.removeClass("active");
-    $(this).addClass("active");
-  });
 
   //Submenu Dropdown Toggle
   $(".navigation li.dropdown").each(function () {
@@ -222,47 +202,7 @@ const THEMEMASCOT = {};
   }
   setTimeout(initCounters, 400);
 
-  // count Bar
-  if ($(".count-bar").length) {
-    if (typeof IntersectionObserver !== "undefined") {
-      let barObserver = new IntersectionObserver(
-        (entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const el = $(entry.target);
-              const percent = el.data("percent");
-              el.css("width", percent).addClass("counted");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1 },
-      );
 
-      $(".count-bar").each(function () {
-        barObserver.observe(this);
-      });
-    }
-  }
-
-  //Price Range Slider
-  if ($(".price-range-slider").length) {
-    $(".price-range-slider").slider({
-      range: true,
-      min: 10,
-      max: 99,
-      values: [10, 60],
-      slide: function (event, ui) {
-        $("input.property-amount").val(ui.values[0] + " - " + ui.values[1]);
-      },
-    });
-
-    $("input.property-amount").val(
-      $(".price-range-slider").slider("values", 0) +
-        " - $" +
-        $(".price-range-slider").slider("values", 1),
-    );
-  }
 
   // Image move with mouse Feature Block Resort Home Layout 3
   // if ($(".award-block-two .list-item").length) {
@@ -334,231 +274,37 @@ const THEMEMASCOT = {};
     });
   });
 
-  if ($(".service-block-three .inner-box").length) {
-    $(".service-block-three .inner-box").on("mouseenter", function () {
-      $(".service-block-three .inner-box").removeClass("active");
-      $(this).addClass("active");
-    });
-  }
-
-  //product bxslider
-  if ($(".product-details .bxslider").length) {
-    $(".product-details .bxslider").bxSlider({
-      nextSelector: ".product-details #slider-next",
-      prevSelector: ".product-details #slider-prev",
-      nextText: '<i class="fa fa-angle-right"></i>',
-      prevText: '<i class="fa fa-angle-left"></i>',
-      mode: "fade",
-      auto: "true",
-      speed: "700",
-      pagerCustom: ".product-details .slider-pager .thumb-box",
-    });
-  }
-  //Tabs Box
-
-  //Quantity box
-  $(".quantity-box .add").on("click", function () {
-    if ($(this).prev().val() < 999) {
-      $(this)
-        .prev()
-        .val(+$(this).prev().val() + 1);
-    }
-  });
-  $(".quantity-box .sub").on("click", function () {
-    if ($(this).next().val() > 1) {
-      if ($(this).next().val() > 1)
-        $(this)
-          .next()
-          .val(+$(this).next().val() - 1);
-    }
-  });
-
   $(".working-block-one .inner-block").on("mouseenter", function () {
     $(".working-block-one .inner-block").removeClass("active");
     $(this).addClass("active");
   });
 
-  if ($(".award-block-two .list-item, .award-block-three .list-item").length) {
-    const $items = $(
-      ".award-block-two .list-item, .award-block-three .list-item",
-    );
-
-    $items.each(function () {
-      const $item = $(this);
-      // ===== Mouse move image follow =====
-
-      // ===== Border control for previous item =====
-      $item.on("mouseenter", function () {
-        $items.removeClass("prev-no-border"); // reset
-        $(this).prev(".list-item").addClass("prev-no-border");
-      });
-
-      $item.on("mouseleave", function () {
-        $items.removeClass("prev-no-border"); // restore when leaving
-      });
-    });
-  }
-
-  if ($(".award-block-three .list-item").length) {
-    const $items = $(".award-block-three .list-item");
-    $items.each(function () {
+  if ($(".award-block-two .list-item").length) {
+    const $awardItems = $(".award-block-two .list-item");
+    $awardItems.each(function () {
       const $item = $(this);
       const $hoverImage = $item.find(".hover-image");
-      // ===== Mouse move image follow =====
       if ($hoverImage.length) {
         $item.on("mousemove", function (e) {
           const offset = $item.offset();
           const dx = e.pageX - offset.left;
           const dy = e.pageY - offset.top;
-
-          $hoverImage.css(
-            "transform",
-            `translate(${dx}px, ${dy}px) rotate(-5deg)`,
-          );
+          $hoverImage.css("transform", `translate(${dx}px, ${dy}px) rotate(-5deg)`);
         });
       }
-      // ===== Border control for previous item =====
       $item.on("mouseenter", function () {
-        $items.removeClass("prev-no-border"); // reset
+        $awardItems.removeClass("prev-no-border");
         $(this).prev(".list-item").addClass("prev-no-border");
       });
-
       $item.on("mouseleave", function () {
-        $items.removeClass("prev-no-border"); // restore when leaving
+        $awardItems.removeClass("prev-no-border");
       });
     });
   }
 
-  // Horizontal accordion js area start here ***
-  $(".hzAccordion__item").on("click", function () {
-    $(this).addClass("active").siblings().removeClass("active");
-  });
-  // Horizontal accordion js area end here ***
 
-  // Project Image Slider
-  if ($(".project-image-slider").length) {
-    const swiper = new Swiper(".project-image-slider", {
-      slidesPerView: 2,
-      spaceBetween: 30,
-      speed: 600,
-      loop: true,
-      breakpoints: {
-        320: {
-          slidesPerView: 1,
-        },
-        576: {
-          slidesPerView: 1,
-        },
-        768: {
-          slidesPerView: 1,
-        },
-        992: {
-          slidesPerView: 2,
-        },
-        1023: {
-          slidesPerView: 2,
-        },
-      },
-    });
-  }
 
-  /* ================================
-      Custom Accordion Js Start
-    ================================ */
 
-  if ($(".accordion-box").length) {
-    $(".accordion-box").on("click", ".acc-btn", function () {
-      const outerBox = $(this).closest(".accordion-box");
-      const target = $(this).closest(".accordion");
-      const accBtn = $(this);
-      const accContent = accBtn.next(".acc-content");
-
-      if (target.hasClass("active-block")) {
-        // Already open, so close it
-        accBtn.removeClass("active");
-        target.removeClass("active-block");
-        accContent.slideUp(300);
-      } else {
-        // Close all others
-        outerBox.find(".accordion").removeClass("active-block");
-        outerBox.find(".acc-btn").removeClass("active");
-        outerBox.find(".acc-content").slideUp(300);
-
-        // Open clicked one
-        accBtn.addClass("active");
-        target.addClass("active-block");
-        accContent.slideDown(300);
-      }
-    });
-  }
-
-  /* ================================
-      Brand Slider Js Start
-    ================================ */
-
-  if ($(".brand-slider").length > 0) {
-    const brandSlider = new Swiper(".brand-slider", {
-      spaceBetween: 0,
-      speed: 1300,
-      loop: true,
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-      },
-      breakpoints: {
-        1199: {
-          slidesPerView: 5,
-        },
-        991: {
-          slidesPerView: 4,
-        },
-        767: {
-          slidesPerView: 3,
-        },
-        575: {
-          slidesPerView: 3,
-        },
-        400: {
-          slidesPerView: 2,
-        },
-        0: {
-          slidesPerView: 1,
-        },
-      },
-    });
-  }
-
-  if ($(".brand-slider-3").length > 0) {
-    const brandSlider3 = new Swiper(".brand-slider-3", {
-      spaceBetween: 30,
-      speed: 1300,
-      loop: true,
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-      },
-      breakpoints: {
-        1199: {
-          slidesPerView: 5,
-        },
-        991: {
-          slidesPerView: 4,
-        },
-        767: {
-          slidesPerView: 3,
-        },
-        575: {
-          slidesPerView: 3,
-        },
-        400: {
-          slidesPerView: 2,
-        },
-        0: {
-          slidesPerView: 1,
-        },
-      },
-    });
-  }
 
   /* ================================
       Testimonial Slider Js Start
@@ -612,113 +358,7 @@ const THEMEMASCOT = {};
     });
   }
 
-  if ($(".testimonial-slider-2").length > 0) {
-    const testimonialSlider2 = new Swiper(".testimonial-slider-2", {
-      spaceBetween: 30,
-      speed: 1300,
-      loop: true,
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-      },
-      navigation: {
-        nextEl: ".array-next",
-        prevEl: ".array-prev",
-      },
-      pagination: {
-        el: ".dot",
-        clickable: true,
-      },
-    });
-  }
 
-  if ($(".testimonial-slider-3").length > 0) {
-    const testimonialSlider3 = new Swiper(".testimonial-slider-3", {
-      spaceBetween: 30,
-      freeMode: true,
-      centeredSlides: true,
-      loop: true,
-      speed: 4000,
-      allowTouchMove: false,
-      autoplay: {
-        delay: 1,
-        disableOnInteraction: true,
-      },
-      breakpoints: {
-        1399: {
-          slidesPerView: 3,
-        },
-        991: {
-          slidesPerView: 2,
-        },
-        767: {
-          slidesPerView: 1.2,
-        },
-        575: {
-          slidesPerView: 1.2,
-        },
-
-        0: {
-          slidesPerView: 1,
-        },
-      },
-    });
-  }
-
-  if ($(".testimonial-slider-5").length > 0) {
-    const testimonialSlider5 = new Swiper(".testimonial-slider-5", {
-      spaceBetween: 30,
-      speed: 1300,
-      loop: true,
-      autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-      },
-      navigation: {
-        nextEl: ".array-next",
-        prevEl: ".array-prev",
-      },
-    });
-  }
-
-  $(".option").on("click", function () {
-    $(".option").removeClass("active");
-    $(this).addClass("active");
-  });
-
-  if ($(".testimonial-slider-4").length > 0) {
-    const testimonialSlider4 = new Swiper(".testimonial-slider-4", {
-      spaceBetween: 30,
-      freeMode: true,
-      centeredSlides: true,
-      loop: true,
-      speed: 4000,
-      allowTouchMove: false,
-      autoplay: {
-        delay: 1,
-        disableOnInteraction: true,
-        reverseDirection: true,
-      },
-      breakpoints: {
-        1399: {
-          slidesPerView: 3,
-        },
-        991: {
-          slidesPerView: 2,
-        },
-        767: {
-          slidesPerView: 1.2,
-        },
-        575: {
-          slidesPerView: 1.2,
-        },
-
-        0: {
-          slidesPerView: 1,
-        },
-      },
-    });
-  }
 
   /* ================================
       Services Accordion Js Start
@@ -788,73 +428,7 @@ const THEMEMASCOT = {};
     itCursor();
   }
 
-  const awardBlocks = document.querySelectorAll(".award-block-four");
 
-  function followImageCursor(event, parent) {
-    const innerBox = parent.querySelector(".inner-box");
-    if (!innerBox) return;
-
-    const rect = innerBox.getBoundingClientRect();
-    const dx = event.clientX - rect.left;
-    const dy = event.clientY - rect.top;
-
-    const targetImage = innerBox.querySelector(".hover-image");
-
-    if (targetImage) {
-      targetImage.style.transform = `translate(${dx}px, ${dy}px) rotate(15deg)`;
-    }
-  }
-
-  /* Throttle (60fps) */
-  function throttle(fn, limit) {
-    let inThrottle;
-    return function (...args) {
-      if (!inThrottle) {
-        fn.apply(this, args);
-        inThrottle = true;
-        setTimeout(() => (inThrottle = false), limit);
-      }
-    };
-  }
-
-  awardBlocks.forEach((block) => {
-    block.addEventListener(
-      "mousemove",
-      throttle((e) => {
-        followImageCursor(e, block);
-      }, 16),
-    );
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const amountWrapper = document.querySelector(".amount-selection");
-    const amountInput = document.getElementById("selected-amount");
-
-    if (!amountWrapper || !amountInput) return;
-
-    amountWrapper.addEventListener("click", function (e) {
-      const item = e.target.closest(".amount-item");
-      if (!item) return;
-
-      // remove previous active
-      const activeItem = amountWrapper.querySelector(".amount-item.active");
-      if (activeItem) {
-        activeItem.classList.remove("active");
-      }
-
-      // add active
-      item.classList.add("active");
-
-      // update input value
-      const amount = item.getAttribute("data-amount");
-      if (amount) {
-        amountInput.value = amount;
-      } else {
-        amountInput.value = "";
-        amountInput.focus();
-      }
-    });
-  });
 
   /* ================================
         Back To Top Button Js Start
@@ -872,125 +446,9 @@ const THEMEMASCOT = {};
     $("html, body").animate({ scrollTop: 0 }, 800);
   });
 
-  if ($(".price-range-slider").length) {
-    $(".price-range-slider").slider({
-      range: "min",
-      min: 100,
-      max: 2000,
-      value: 1000,
-      slide: function (event, ui) {
-        // show value text
-        $(".property-output").text(ui.value + " sq. ft.");
-      },
-    });
 
-    // initial text
-    $(".property-output").text(
-      $(".price-range-slider").slider("value") + " sq. ft.",
-    );
-  }
 
-  //MixItup Gallery
-  if ($(".filter-list").length) {
-    $(".filter-list").mixItUp({});
-  }
 
-  //Jquery Knob animation  // Pie Chart Animation
-  if ($(".dial").length && $.fn.appear) {
-    $(".dial").appear(
-      function () {
-        const elm = $(this);
-        const color = elm.attr("data-fgColor");
-        const perc = elm.attr("value");
-
-        elm.knob({
-          value: 0,
-          min: 0,
-          max: 100,
-          skin: "tron",
-          readOnly: true,
-          thickness: 0.15,
-          dynamicDraw: true,
-          displayInput: false,
-        });
-        $({ value: 0 }).animate(
-          { value: perc },
-          {
-            duration: 2000,
-            easing: "swing",
-            progress: function () {
-              elm.val(Math.ceil(this.value)).trigger("change");
-            },
-          },
-        );
-        //circular progress bar color
-        $(this).append(function () {
-          // elm.parent().parent().find('.circular-bar-content').css('color',color);
-          //elm.parent().parent().find('.circular-bar-content .txt').text(perc);
-        });
-      },
-      { accY: 20 },
-    );
-  }
-
-  if ($(".tabs-box").length) {
-    $(".tabs-box .tab-buttons .tab-btn").on("click", function (e) {
-      e.preventDefault();
-      const target = $($(this).attr("data-tab"));
-
-      if ($(target).is(":visible")) {
-        return false;
-      } else {
-        target
-          .parents(".tabs-box")
-          .find(".tab-buttons")
-          .find(".tab-btn")
-          .removeClass("active-btn");
-        $(this).addClass("active-btn");
-        target
-          .parents(".tabs-box")
-          .find(".tabs-content")
-          .find(".tab")
-          .fadeOut(0);
-        target
-          .parents(".tabs-box")
-          .find(".tabs-content")
-          .find(".tab")
-          .removeClass("active-tab animated fadeIn");
-        $(target).fadeIn(300);
-        $(target).addClass("active-tab animated fadeIn");
-      }
-    });
-  }
-
-  //Progress Bar
-  if ($(".progress-line").length && $.fn.appear) {
-    $(".progress-line").appear(
-      function () {
-        const el = $(this);
-        const percent = el.data("width");
-        $(el).css("width", percent + "%");
-      },
-      { accY: 0 },
-    );
-  }
-
-  $(document).ready(function () {
-    $("select").niceSelect();
-  });
-
-  //>> Video Popup Start <<//
-  $(".img-popup").magnificPopup({
-    type: "image",
-    gallery: {
-      enabled: true,
-    },
-  });
-
-  $(".video-popup").magnificPopup({
-    type: "iframe",
-    callbacks: {},
-  });
 
   // Elements Animation
   if ($(".wow").length && typeof WOW !== "undefined") {
@@ -1004,7 +462,4 @@ const THEMEMASCOT = {};
     wow.init();
   }
 
-  /* ================================
-	Project Slider Js Start
-	================================ */
 })(window.jQuery);

@@ -176,9 +176,8 @@ document.addEventListener("DOMContentLoaded", function () {
         basePath + "js/ScrollSmoother.min.js",
         basePath + "js/SplitText.min.js",
         basePath + "js/ScrollToPlugin.min.js",
-        basePath + "js/parallaxie.js",
-        basePath + "js/main.js?v=12",
-        basePath + "js/page-scripts.js?v=12",
+        basePath + "js/main.js?v=13",
+        basePath + "js/page-scripts.js?v=13",
       ];
 
       function loadScript(index) {
