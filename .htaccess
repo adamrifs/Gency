@@ -2,6 +2,14 @@ DirectoryIndex index.html
 
 RewriteEngine On
 
+# Redirect old /seo/ URL and /services/ URLs to /service/
+RewriteRule ^seo/?$ /service/seo/ [R=301,L]
+RewriteRule ^services/seo/?$ /service/seo/ [R=301,L]
+RewriteRule ^services/?$ /service/ [R=301,L]
+RewriteRule ^best-digital-marketing-course-in-kerala/?$ /service/best-digital-marketing-course-in-kerala/ [R=301,L]
+RewriteRule ^services/best-digital-marketing-course-in-kerala/?$ /service/best-digital-marketing-course-in-kerala/ [R=301,L]
+RewriteRule ^blog-details/?$ /blog/performance-marketing-vs-digitalmarketing/ [R=301,L]
+
 # Redirect any request containing index.html to clean directory path
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index\.html [NC]
 RewriteRule ^(.*)index\.html$ /$1 [R=301,L]
