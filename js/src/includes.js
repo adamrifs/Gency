@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     /\/(service|services|blog)\/[^\/]+\/?(index\.html)?$/,
   );
   const isOneLevelDeep = window.location.pathname.match(
-    /\/(about|service|services|contact|projects|blog|blog-details|best-digital-marketing-course-in-kerala)\/?(index\.html)?$/,
+    /\/(about|service|services|contact|projects|blog|blog-details|seo|best-digital-marketing-course-in-kerala)\/?(index\.html)?$/,
   );
   const isSubDir = Boolean(isTwoLevelsDeep || isOneLevelDeep);
   const basePath = isTwoLevelsDeep ? "../../" : isOneLevelDeep ? "../" : "./";
@@ -31,20 +31,20 @@ document.addEventListener("DOMContentLoaded", function () {
       // Fix image paths and navigation links in header and footer if in subdirectory
       if (isTwoLevelsDeep) {
         headerData = headerData.replace(
-          /src="(?!\.\.\/)images\//g,
+          /src="(?:\.\.\/)*images\//g,
           'src="../../images/',
         );
         footerData = footerData.replace(
-          /src="(?!\.\.\/)images\//g,
+          /src="(?:\.\.\/)*images\//g,
           'src="../../images/',
         );
 
         headerData = headerData.replace(
-          /url\((&quot;|['"])?(?!\.\.\/)images\//g,
+          /url\((&quot;|['"])?(?:\.\.\/)*images\//g,
           "url($1../../images/",
         );
         footerData = footerData.replace(
-          /url\((&quot;|['"])?(?!\.\.\/)images\//g,
+          /url\((&quot;|['"])?(?:\.\.\/)*images\//g,
           "url($1../../images/",
         );
 
@@ -52,11 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
         footerData = footerData.replace(/href="\.\/"/g, 'href="../../"');
 
         headerData = headerData.replace(
-          /href="(about|service|services|contact|projects|blog|blog-details|best-digital-marketing-course-in-kerala)\//g,
+          /href="(about|service|services|contact|projects|blog|blog-details|seo|best-digital-marketing-course-in-kerala)\//g,
           'href="../../$1/',
         );
         footerData = footerData.replace(
-          /href="(about|service|services|contact|projects|blog|blog-details|best-digital-marketing-course-in-kerala)\//g,
+          /href="(about|service|services|contact|projects|blog|blog-details|seo|best-digital-marketing-course-in-kerala)\//g,
           'href="../../$1/',
         );
         footerData = footerData.replace(
@@ -66,20 +66,20 @@ document.addEventListener("DOMContentLoaded", function () {
         footerData = footerData.replace(/href="\.\.\/#/g, 'href="../../#');
       } else if (isOneLevelDeep) {
         headerData = headerData.replace(
-          /src="(?!\.\.\/)images\//g,
+          /src="(?:\.\.\/)*images\//g,
           'src="../images/',
         );
         footerData = footerData.replace(
-          /src="(?!\.\.\/)images\//g,
+          /src="(?:\.\.\/)*images\//g,
           'src="../images/',
         );
 
         headerData = headerData.replace(
-          /url\((&quot;|['"])?(?!\.\.\/)images\//g,
+          /url\((&quot;|['"])?(?:\.\.\/)*images\//g,
           "url($1../images/",
         );
         footerData = footerData.replace(
-          /url\((&quot;|['"])?(?!\.\.\/)images\//g,
+          /url\((&quot;|['"])?(?:\.\.\/)*images\//g,
           "url($1../images/",
         );
 
@@ -87,11 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
         footerData = footerData.replace(/href="\.\/"/g, 'href="../"');
 
         headerData = headerData.replace(
-          /href="(about|service|services|contact|projects|blog|blog-details|best-digital-marketing-course-in-kerala)\//g,
+          /href="(about|service|services|contact|projects|blog|blog-details|seo|best-digital-marketing-course-in-kerala)\//g,
           'href="../$1/',
         );
         footerData = footerData.replace(
-          /href="(about|service|services|contact|projects|blog|blog-details|best-digital-marketing-course-in-kerala)\//g,
+          /href="(about|service|services|contact|projects|blog|blog-details|seo|best-digital-marketing-course-in-kerala)\//g,
           'href="../$1/',
         );
         footerData = footerData.replace(

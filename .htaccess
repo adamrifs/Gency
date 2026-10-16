@@ -2,12 +2,12 @@ DirectoryIndex index.html
 
 RewriteEngine On
 
-# Redirect old /seo/ URL and /services/ URLs to /service/
-RewriteRule ^seo/?$ /service/seo/ [R=301,L]
-RewriteRule ^services/seo/?$ /service/seo/ [R=301,L]
-RewriteRule ^services/?$ /service/ [R=301,L]
-RewriteRule ^best-digital-marketing-course-in-kerala/?$ /service/best-digital-marketing-course-in-kerala/ [R=301,L]
-RewriteRule ^services/best-digital-marketing-course-in-kerala/?$ /service/best-digital-marketing-course-in-kerala/ [R=301,L]
+# Redirect old /service/, /seo/, and legacy course URLs to /services/
+RewriteRule ^seo/?$ /services/seo/ [R=301,L]
+RewriteRule ^service/seo/?$ /services/seo/ [R=301,L]
+RewriteRule ^service/?$ /services/ [R=301,L]
+RewriteRule ^best-digital-marketing-course-in-kerala/?$ /services/best-digital-marketing-course-in-kerala/ [R=301,L]
+RewriteRule ^service/best-digital-marketing-course-in-kerala/?$ /services/best-digital-marketing-course-in-kerala/ [R=301,L]
 RewriteRule ^blog-details/?$ /blog/performance-marketing-vs-digitalmarketing/ [R=301,L]
 
 # Redirect any request containing index.html to clean directory path
