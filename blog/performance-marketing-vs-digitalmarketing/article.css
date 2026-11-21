@@ -25,15 +25,30 @@
 }
 
 .marketing-guide h2 {
-  max-width: 19ch;
+  max-width: 23ch;
   margin: .6rem 0 1rem;
-  font-size: clamp(2.25rem, 4.2vw, 3.9rem);
+  font-size: clamp(2rem, 4vw, 3.65rem);
   letter-spacing: -.045em;
 }
 
-.marketing-guide h2 span,
-.marketing-guide .guide-link {
+.article-page .tz-itm-title .text-theme-color {
   color: var(--theme-color1);
+}
+
+.article-page .section-title-mark::after {
+  content: "";
+  display: block;
+  width: 1.25rem;
+  height: 2px;
+  margin-top: .5rem;
+  background: var(--theme-color1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .article-page .tz-itm-title * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 .marketing-guide h3 {
@@ -47,78 +62,176 @@
   font-size: 1.18rem;
 }
 
-.guide-opening > p:last-child,
+.guide-opening > p,
 .guide-section > p {
   max-width: 70ch;
 }
 
-.marketing-guide .guide-kicker {
-  display: flex;
-  align-items: center;
-  gap: .55rem;
+.marketing-guide p + p,
+.marketing-guide :is(.guide-table-wrap, .guide-metrics, .guide-list, .guide-pair, .guide-author, .guide-module-grid, .guide-tags) + p {
+  margin-top: .8rem;
+}
+
+.guide-opening-mark {
+  display: block;
+  margin-bottom: .85rem;
+}
+
+.guide-opening h2 + p {
   color: var(--headings-color);
-  font-size: .9rem;
-  font-weight: 500;
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
 }
 
 .guide-pair {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16.5rem), 1fr));
+  align-items: start;
   gap: 1rem;
   margin-top: 1.75rem;
 }
 
 .guide-card,
-.guide-author {
+.guide-author,
+.guide-conclusion {
   background: var(--site-panel);
   border: 1px solid var(--guide-border);
   border-radius: 1rem;
 }
 
-.guide-card {
+.guide-card,
+.guide-conclusion {
+  min-width: 0;
   padding: clamp(1.2rem, 2.4vw, 2rem);
 }
 
 .guide-card img {
-  width: 3rem;
-  height: 3rem;
   object-fit: contain;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .guide-card h3 {
   font-size: clamp(1.4rem, 2.1vw, 1.8rem);
 }
 
-.guide-card .guide-list {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--guide-border);
+.guide-card .guide-note {
+  background: var(--site-black);
 }
 
-.guide-list,
-.guide-decisions {
+.guide-overview,
+.guide-examples {
+  align-items: stretch;
+}
+
+.guide-overview .guide-list {
+  padding: .9rem .85rem .9rem 2rem;
+  border: 1px solid var(--guide-border);
+  border-radius: .65rem;
+  background: var(--site-black);
+}
+
+.marketing-guide .guide-icon {
+  display: inline-block;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+  padding: .4rem;
+  object-fit: contain;
+  border-radius: .45rem;
+  background: rgba(var(--theme-color1-rgb), .11);
+}
+
+.guide-examples .guide-icon {
+  margin-bottom: .65rem;
+}
+
+.guide-list {
+  margin: .8rem 0 0;
   padding-left: 1.15rem;
 }
 
-.guide-list > li,
-.guide-decisions > li {
+.guide-list > li {
   list-style: disc outside;
 }
 
-.guide-list li + li,
-.guide-decisions li + li {
-  margin-top: .55rem;
+.guide-list > li + li {
+  margin-top: .4rem;
 }
 
-.guide-list li::marker,
-.guide-decisions li::marker {
+.guide-list li::marker {
   color: var(--theme-color1);
 }
 
-.guide-section,
-.guide-author {
+.guide-section {
   margin-top: var(--guide-gap);
+}
+
+.guide-list-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: .4rem 1.5rem;
+}
+
+.guide-list-columns > li + li {
+  margin: 0;
+}
+
+.guide-collaboration {
+  padding: clamp(1.15rem, 3.2vw, 2rem);
+  border: 1px solid var(--guide-border);
+  border-radius: 1rem;
+  background: var(--site-panel);
+}
+
+.guide-collaboration .guide-pair {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  align-items: stretch;
+  margin: 1.2rem 0 1.4rem;
+}
+
+.guide-collaboration .guide-card {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  padding: 1rem;
+  background: var(--site-black);
+}
+
+.guide-collaboration .guide-card img {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  margin: .15rem 0 0;
+}
+
+.guide-collaboration-list {
+  gap: .55rem 1rem;
+  margin-top: .7rem;
+}
+
+.guide-collaboration-list li {
+  display: flex;
+  align-items: baseline;
+  gap: .65rem;
+}
+
+.guide-collaboration-list li::before {
+  content: "";
+  flex: 0 0 .6rem;
+  height: .35rem;
+  border: solid var(--theme-color1);
+  border-width: 0 0 2px 2px;
+  transform: translateY(-.15em) rotate(-45deg);
+}
+
+.guide-collaboration-summary {
+  margin-top: 1.35rem;
+  padding: .8rem 1rem;
+  border-left: 3px solid var(--theme-color1);
+  background: var(--site-black);
+}
+
+.marketing-guide .guide-answer strong {
+  color: var(--theme-color1);
 }
 
 .guide-table-wrap {
@@ -157,54 +270,51 @@
   border-top: 1px solid var(--guide-border);
 }
 
-.guide-table-wrap th:first-child {
-  width: 20%;
+.guide-table-wrap tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, .025);
 }
 
-.guide-table-wrap th:not(:first-child) {
-  width: 40%;
-}
-
-.guide-steps {
-  margin-top: 1.5rem;
-  padding: 0;
-  counter-reset: stage;
-}
-
-.guide-steps li {
-  position: relative;
-  padding: 0 0 1.4rem 3.1rem;
-  counter-increment: stage;
-}
-
-.guide-steps li::before {
-  content: counter(stage, decimal-leading-zero);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 2.2rem;
-  height: 2.2rem;
-  display: grid;
-  place-items: center;
+.guide-table-wrap thead th + th {
   color: var(--theme-color1);
-  background: var(--site-panel);
+}
+
+.guide-table-wrap th:first-child {
+  width: 24%;
+}
+
+.guide-table-wrap thead th + th {
+  width: 38%;
+}
+
+.marketing-guide .guide-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem .6rem;
+  max-width: none;
+  padding: .85rem;
   border: 1px solid var(--guide-border);
-  border-radius: 50%;
-  font-size: .85rem;
-  font-weight: 600;
+  border-radius: .75rem;
+  background: var(--site-panel);
 }
 
-.guide-steps li:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 2.2rem;
-  bottom: 0;
-  left: 1.1rem;
-  border-left: 1px solid var(--guide-border);
+.guide-flow-step {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
 }
 
-.guide-steps li:last-child {
-  padding-bottom: 0;
+.guide-flow-label {
+  padding: .3rem .65rem;
+  background: var(--site-black);
+  border: 1px solid var(--guide-border);
+  border-radius: .4rem;
+  color: var(--headings-color);
+}
+
+.guide-flow-arrow {
+  flex: none;
+  color: var(--theme-color1);
 }
 
 .guide-metrics {
@@ -221,23 +331,91 @@
 
 .guide-metrics dt {
   color: var(--headings-color);
-  font-weight: 500;
-}
-
-.guide-metrics dt span {
-  color: var(--theme-color1);
-  white-space: nowrap;
+  font-weight: 600;
 }
 
 .guide-metrics dd {
   margin: 0;
 }
 
+.guide-benefits dt,
+.guide-checklist h4 {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+}
+
+.guide-metric-card,
+.guide-module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: .65rem;
+  margin: 1rem 0 0;
+}
+
+.guide-metric-card > div,
+.guide-module-grid > li {
+  min-width: 0;
+  padding: .85rem;
+  border: 1px solid var(--guide-border);
+  border-radius: .65rem;
+  background: var(--site-panel);
+}
+
+.guide-metric-card > div {
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content 1fr;
+  gap: .45rem;
+}
+
+.guide-metric-card dt span {
+  color: var(--theme-color1);
+}
+
+.guide-module-grid > li {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.guide-objectives,
+.guide-curriculum {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+}
+
+.marketing-guide .guide-search {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  max-width: 38rem;
+  padding: .6rem .85rem;
+  border: 1px solid var(--guide-border);
+  border-radius: .65rem;
+  background: var(--site-panel);
+}
+
 .marketing-guide .guide-note {
   max-width: none;
-  margin-top: 1.25rem;
-  padding: 1rem 1.25rem;
+  padding: .9rem 1.1rem;
   border-left: 3px solid var(--theme-color1);
+}
+
+.marketing-guide .guide-formula {
+  border: 1px solid rgba(var(--theme-color1-rgb), .35);
+  border-radius: .65rem;
+  background: rgba(var(--theme-color1-rgb), .08);
+}
+
+.guide-checklist {
+  margin: 1rem 0 0;
+}
+
+.guide-checklist > li {
+  margin-bottom: .8rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--guide-border);
+  border-radius: .65rem;
+  background: var(--site-panel);
 }
 
 .guide-author {
@@ -247,7 +425,6 @@
 }
 
 .guide-author img {
-  align-self: stretch;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -258,24 +435,80 @@
   padding: clamp(1.25rem, 2.8vw, 2rem);
 }
 
-.marketing-guide .guide-link {
-  display: inline-block;
-  margin-top: .85rem;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: .25em;
+.guide-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--guide-border);
+  border-radius: .85rem;
+  object-fit: cover;
 }
 
-.marketing-guide .guide-link:focus-visible {
-  outline: 2px solid currentColor !important;
-  outline-offset: 3px;
+.guide-strategy-photo {
+  margin-top: 1.15rem;
+  aspect-ratio: 16 / 7;
+  object-position: center 42%;
 }
 
-.marketing-guide .guide-link:hover {
-  color: var(--headings-color);
+.guide-training-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 36%);
+  align-items: center;
+  gap: 1rem;
+  margin: .95rem 0 1.15rem;
+}
+
+.guide-training-intro .guide-photo {
+  aspect-ratio: 4 / 3;
+}
+
+.guide-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: .8rem 0 0;
+}
+
+.guide-tags li {
+  padding: .25rem .65rem;
+  border: 1px solid var(--guide-border);
+  border-radius: 1rem;
+}
+
+.guide-skills {
+  padding: .9rem .85rem .9rem 2rem;
+  border: 1px solid var(--guide-border);
+  border-radius: .65rem;
+  background: var(--site-panel);
+}
+
+.marketing-guide .guide-faq-card.active {
+  border-color: rgba(var(--theme-color1-rgb), .45);
+  background: var(--site-panel);
+}
+
+.guide-conclusion .guide-note {
+  background: var(--site-black);
+}
+
+.marketing-guide .faq-block-one .text {
+  color: var(--guide-copy);
+}
+
+.marketing-guide .faq-block-one .title-box:focus-visible {
+  outline: 2px solid var(--theme-color1) !important;
+  outline-offset: 2px;
 }
 
 @media (max-width: 575.98px) {
+  .guide-strategy-photo {
+    aspect-ratio: 4 / 3;
+  }
+
+  .guide-training-intro {
+    grid-template-columns: 1fr;
+  }
+
   .guide-metrics > div {
     grid-template-columns: 1fr;
     gap: .2rem;
@@ -283,6 +516,19 @@
 
   .guide-table-wrap table {
     font-size: .875rem;
+  }
+
+  .guide-table-wrap th,
+  .guide-table-wrap td {
+    padding-inline: .35rem;
+  }
+
+  .guide-table-wrap th:first-child {
+    width: 31%;
+  }
+
+  .guide-table-wrap thead th + th {
+    width: 34.5%;
   }
 
   .guide-author {
@@ -294,6 +540,8 @@
   }
 }
 
-.marketing-guide .guide-link {
-  transition: none;
+@media (max-width: 360px) {
+  .guide-table-wrap table {
+    font-size: .8125rem;
+  }
 }
